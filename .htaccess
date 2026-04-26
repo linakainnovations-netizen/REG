@@ -1,8 +1,20 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteBase /St._Paul_Chipata_Portal/
+
+    # Mask dashboard subfolders: block direct folder access but allow assets
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} ^/St._Paul_Chipata_Portal/dashboard/(admin_priest|parish_council|youth_council|lay_groups|choirs|SCC_zonez) [NC]
+    RewriteRule ^(.*)$ dashboard [L,R=301]
+
+    # Dashboard sub-page routing (e.g. /dashboard/handover -> /dashboard/index.php?page=handover)
+    RewriteRule ^dashboard/([a-zA-Z0-0_-]+)/?$ dashboard/index.php?page=$1 [L,QSA]
+
+    # Redirect to index.php if not a file or directory
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]
+    RewriteRule ^(.*)$ index.php?path=$1 [L,QSA]
+
 </IfModule>
 
 # Security headers

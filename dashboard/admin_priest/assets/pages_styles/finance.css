@@ -1,0 +1,42 @@
+/* Finance Page Styles */
+.finance-container { padding: 1rem; }
+
+.finance-summary-card h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-top: 0.5rem;
+}
+
+.progress-container {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+/* Transaction Types */
+.type-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.type-offertory { background: #3b82f6; }
+.type-tithe { background: #10b981; }
+.type-donation { background: #f59e0b; }
+.type-contribution { background: #8b5cf6; }
+
+.card-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}

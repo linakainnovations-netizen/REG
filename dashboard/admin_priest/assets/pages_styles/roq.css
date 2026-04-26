@@ -1,0 +1,321 @@
+/* ============================================
+   ROQ (Procurement) Page Styles
+   Admin/Priest Dashboard - St. Paul Portal
+   ============================================ */
+
+/* --- Page Header --- */
+.procurement-container h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+}
+
+/* --- Status Badges --- */
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.badge-light {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.badge-success {
+    background: #d1fae5;
+    color: #065f46;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* --- ROQ Card Header --- */
+.roq-card-header.bg-primary {
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+}
+
+.text-warning { color: #d97706; }
+
+/* ============================================
+   ROQ COMPOSE MODAL - Premium Design
+   ============================================ */
+
+/* Backdrop */
+.roq-modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Modal Container */
+.roq-modal {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    width: 580px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px -10px rgba(0,0,0,0.35);
+    animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Modal Header */
+.roq-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.75rem 2rem 1.25rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.roq-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.roq-modal-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.roq-modal-title h3 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.2rem;
+}
+
+.roq-modal-title p {
+    font-size: 0.82rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.roq-modal-close {
+    width: 36px;
+    height: 36px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    color: #64748b;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.roq-modal-close:hover {
+    background: #fee2e2;
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+/* Modal Form */
+.roq-modal-form {
+    padding: 1.75rem 2rem;
+}
+
+.roq-field {
+    margin-bottom: 1.5rem;
+}
+
+.roq-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+}
+
+.roq-label i {
+    color: #3b82f6;
+    margin-right: 0.4rem;
+    width: 14px;
+}
+
+.roq-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.625rem;
+    font-size: 0.925rem;
+    color: #0f172a;
+    background: #f8fafc;
+    transition: all 0.2s;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.roq-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.roq-input::placeholder {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.roq-textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.7;
+}
+
+.roq-hint {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: #94a3b8;
+}
+
+/* Modal Footer */
+.roq-modal-footer {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f1f5f9;
+    margin-top: 0.5rem;
+}
+
+.roq-btn-cancel {
+    flex: 1;
+    padding: 0.85rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.625rem;
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.roq-btn-cancel:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+
+.roq-btn-submit {
+    flex: 2;
+    padding: 0.85rem;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    color: white;
+    border: none;
+    border-radius: 0.625rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    font-family: inherit;
+}
+
+.roq-btn-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+.roq-btn-submit:active {
+    transform: translateY(0);
+}
+
+/* --- Review Submissions Table & Utilities --- */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.table th {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    padding: 1rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-secondary {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.bg-light {
+    background-color: #f8fafc !important;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+

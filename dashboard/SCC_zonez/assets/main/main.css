@@ -1,0 +1,14 @@
+/* Role Specific Dashboard Styles */
+.dashboard-wrapper {
+    display: flex;
+    min-height: calc(100vh - 70px);
+}
+
+.dashboard-main {
+    flex-grow: 1;
+    background: #f9fafb;
+}
+
+.content-inner {
+    padding: 2rem;
+}

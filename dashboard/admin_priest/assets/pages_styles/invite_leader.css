@@ -1,0 +1,7 @@
+/* Invite Leader Page Styles */
+.invite-leader-container { padding: 1rem; }
+
+.icon-info { color: #3b82f6; margin-right: 0.75rem; }
+
+/* Any other invite specific styles */
+.form-control::placeholder { color: #94a3b8; }
