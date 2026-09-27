@@ -92,7 +92,49 @@
     });
   });
 
-  // Every other backend form -> demo notice (frontend unchanged, backend stripped)
+  // Login page: one-tap account picker INSIDE the form area so testers
+  // can't miss the usernames (demo helper only, clearly marked).
+  (function loginPicker() {
+    var idEl = document.querySelector('form [name="login_id"]');
+    if (!idEl || typeof DEMO_USERS === "undefined") return;
+    var form = idEl.closest("form");
+    var box = document.createElement("div");
+    box.id = "demo-login-picker";
+    box.style.cssText = "margin-top:1rem;background:#fffbeb;border:1px dashed #f59e0b;border-radius:.6rem;padding:.8rem;";
+    box.innerHTML = "<small style='font-weight:700;'>DEMO — tap an account to sign in (password auto-filled):</small>"
+      + "<div style='display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem;'>"
+      + DEMO_USERS.map(function (u) {
+          return "<button type='button' data-u='" + u.username + "' title='" + u.role_name + "' style='padding:.4rem .6rem;border-radius:.5rem;border:1px solid #cbd5e1;background:#fff;cursor:pointer;font-size:.78rem;font-weight:600;'>" + u.username + "</button>";
+        }).join("") + "</div>";
+    form.appendChild(box);
+    box.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        idEl.value = b.getAttribute("data-u");
+        var pwEl = form.querySelector('[name="password"]');
+        if (pwEl) pwEl.value = "REGIMENT";
+        showLoader("Signing you in…");
+        setTimeout(function () {
+          try { localStorage.setItem("demo_session", JSON.stringify({ username: b.getAttribute("data-u"), at: Date.now() })); } catch (e) {}
+          location.href = "dashboard.html";
+        }, 700);
+      });
+    });
+  })();
+  (function backToTop() {
+    var st = document.createElement("style");
+    st.textContent = "#demo-topbtn{position:fixed;bottom:24px;left:24px;z-index:10002;width:48px;height:48px;border-radius:50%;border:none;background:#1e3a8a;color:#fff;font-size:1.2rem;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3);display:none;align-items:center;justify-content:center;}"
+      + "#demo-topbtn:hover{background:#3b82f6;}";
+    document.head.appendChild(st);
+    var b = document.createElement("button");
+    b.id = "demo-topbtn";
+    b.setAttribute("aria-label", "Back to top");
+    b.innerHTML = "&uarr;";
+    document.body.appendChild(b);
+    window.addEventListener("scroll", function () {
+      b.style.display = window.scrollY > 400 ? "flex" : "none";
+    }, { passive: true });
+    b.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+  })();
   document.querySelectorAll("form").forEach(function (f) {
     if (f._demoIsLogin) return;
     f.addEventListener("submit", function (e) {

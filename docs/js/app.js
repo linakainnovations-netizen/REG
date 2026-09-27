@@ -276,5 +276,23 @@ function bindActions(){
   const ng=$("#newGroupBtn"); if(ng) ng.onclick=()=>alert("Demo: Group Registry opens in PHP version.");
 }
 window.addEventListener("hashchange", render);
+// Back-to-top: dashboard scrolls inside .dashboard-main, not the window
+(function backToTop(){
+  var st = document.createElement("style");
+  st.textContent = "#demo-topbtn{position:fixed;bottom:24px;left:24px;z-index:10004;width:48px;height:48px;border-radius:50%;border:none;background:#1e3a8a;color:#fff;font-size:1.2rem;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3);display:none;align-items:center;justify-content:center;}"
+    + "#demo-topbtn:hover{background:#3b82f6;}";
+  document.head.appendChild(st);
+  var b = document.createElement("button");
+  b.id = "demo-topbtn"; b.setAttribute("aria-label","Back to top"); b.innerHTML = "&uarr;";
+  document.body.appendChild(b);
+  function scroller(){ return document.querySelector(".dashboard-main") || window; }
+  function y(){ var s=scroller(); return s===window ? window.scrollY : s.scrollTop; }
+  document.addEventListener("scroll", function(){ b.style.display = y() > 400 ? "flex" : "none"; }, { passive:true, capture:true });
+  b.addEventListener("click", function(){
+    var s = scroller();
+    if (s === window) window.scrollTo({ top: 0, behavior: "smooth" });
+    else s.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();
 render();
 })();
