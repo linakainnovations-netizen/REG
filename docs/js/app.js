@@ -50,7 +50,22 @@ let financeTx = store.get("finance", DEMO_FINANCE);
 let events = store.get("events", DEMO_EVENTS);
 let live = store.get("live", DEMO_LIVE);
 let giving = store.get("giving", DEMO_GIVING);
-function persist(){ store.set("announcements",announcements); store.set("finance",financeTx); store.set("events",events); store.set("live",live); store.set("giving",giving); store.set("offers",offers); }
+function persist(){ store.set("announcements",announcements); store.set("finance",financeTx); store.set("events",events); store.set("live",live); store.set("giving",giving); store.set("offers",offers); store.set("groupCounts",groupCounts); }
+
+// Group member counts — PHP later: `UPDATE groups SET member_count=? WHERE id=?`
+let groupCounts = store.get("groupCounts", {});
+function gCount(g){ return (groupCounts[g.name] ?? g.member_count); }
+// Which group belongs to the signed-in leader? (PHP later: users.group_id -> groups.id)
+function myGroup(){
+  const m = DEMO_GROUPS.find(g=>g.name===me.group);
+  if(m) return m;
+  if(me.folder==="youth_council") return DEMO_GROUPS.find(g=>g.type==="youth");
+  if(me.folder==="choirs") return DEMO_GROUPS.find(g=>g.type==="choir");
+  if(me.folder==="SCC_zonez") return DEMO_GROUPS.find(g=>g.type==="scc");
+  if(me.folder==="lay_groups") return DEMO_GROUPS.find(g=>g.type==="lay_group");
+  return null;
+}
+const GROUP_ROLE = ["lay_groups","choirs","SCC_zonez","youth_council"].includes(me.folder);
 
 // Supplier offers (ROQ) — awarding works and persists in this browser
 let offers = store.get("offers", [
@@ -186,8 +201,21 @@ R.users = function(){
 
 R.groups = R.secretary_groups = function(){
   const labels = {lay_group:"Lay Groups",youth:"Youth Organizations",elder:"Elders/Senior Councils",scc:"Small Christian Communities (SCC)",choir:"Parish Choirs"};
+  const mg = myGroup();
+  const myPanel = (GROUP_ROLE && mg) ? `<div class="card p-4 mb-4" style="border-left:4px solid #8b5cf6;">
+    <h3>${esc(mg.name)} — My Group</h3>
+    <p class="text-muted">Update your membership and submit group announcements. Leaders see changes instantly. (PHP later: same <code>groups.member_count</code> + <code>announcements(status='pending')</code> fields.)</p>
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem;">
+      <form id="grpCountForm"><label style="font-weight:700;">Current members: <span style="font-size:1.4rem;color:#1e3a8a;">${gCount(mg)}</span></label>
+      <div style="display:flex;gap:.5rem;margin-top:.5rem;"><input id="grpCount" type="number" min="0" value="${gCount(mg)}" class="form-control" required><button class="btn btn-primary">Update</button></div></form>
+      <form id="grpAnnForm"><label style="font-weight:700;">Submit group announcement</label>
+      <input id="grpAnnTitle" class="form-control" placeholder="e.g. ${esc(mg.name)} monthly meeting" required style="margin:.5rem 0;">
+      <textarea id="grpAnnBody" class="form-control" rows="2" placeholder="Details for Secretary & Treasurer review..." required></textarea>
+      <button class="btn btn-primary" style="margin-top:.5rem;">Send for Approval</button></form>
+    </div></div>` : "";
   return `<div class="groups-container"><div class="d-flex justify-content-between align-items-center mb-4"><div><h1>Parish Groups</h1><p class="text-muted">High-level oversight of all organizations, choirs, and communities.</p></div><button class="btn btn-primary" id="newGroupBtn"><i class="fas fa-plus mr-2"></i> Register New Group</button></div>
-  <div class="grid grid-cols-2" style="gap:2rem">${Object.entries(labels).map(([t,label])=>{const list=DEMO_GROUPS.filter(g=>g.type===t);return `<div class="card border-0 shadow-sm p-4 mb-4"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="group-section-title">${label}</h3><span class="badge badge-primary">${list.length} Total</span></div><div class="group-list">${list.length?list.map(g=>`<div class="group-item p-3 border-bottom d-flex align-items-center justify-content-between"><div class="d-flex align-items-center"><div class="group-logo-placeholder mr-3"><i class="fas fa-users"></i></div><div><div class="font-weight-bold">${esc(g.name)}</div><small class="text-muted">${g.member_count} Members</small></div></div></div>`).join(''):'<p class="text-muted">No groups registered in this category.</p>'}</div></div>`;}).join('')}</div></div>`;
+  ${myPanel}
+  <div class="grid grid-cols-2" style="gap:2rem">${Object.entries(labels).map(([t,label])=>{const list=DEMO_GROUPS.filter(g=>g.type===t);return `<div class="card border-0 shadow-sm p-4 mb-4"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="group-section-title">${label}</h3><span class="badge badge-primary">${list.length} Total</span></div><div class="group-list">${list.length?list.map(g=>`<div class="group-item p-3 border-bottom d-flex align-items-center justify-content-between"><div class="d-flex align-items-center"><div class="group-logo-placeholder mr-3"><i class="fas fa-users"></i></div><div><div class="font-weight-bold">${esc(g.name)}</div><small class="text-muted">${gCount(g)} Members</small></div></div></div>`).join(''):'<p class="text-muted">No groups registered in this category.</p>'}</div></div>`;}).join('')}</div></div>`;
 };
 
 R.announcements = function(){
@@ -210,7 +238,7 @@ R.announcements = function(){
 
 R.finance = R.treasurer_finance = function(){
   const mOff = financeTx.filter(t=>t.type==="offertory").reduce((s,t)=>s+ +t.amount,0);
-  return `<div class="finance-container"><div class="d-flex justify-content-between align-items-center mb-4"><div><h1>Collections & Finance</h1><p class="text-muted">Monitor parish revenue and contributions for the current period.</p></div><div class="btn-group"><button class="btn btn-outline mr-2" onclick="window.print()"><i class="fas fa-file-pdf mr-2"></i> Export Report</button><button class="btn btn-primary" id="recEntry"><i class="fas fa-plus mr-2"></i> Record Entry</button></div></div>
+  return `<div class="finance-container"><div class="d-flex justify-content-between align-items-center mb-4"><div><h1>Collections & Finance</h1><p class="text-muted">Monitor parish revenue and contributions for the current period.</p></div><div class="btn-group"><button class="btn btn-outline mr-2" onclick="window.print()"><i class="fas fa-file-pdf mr-2"></i> Export Report</button><button class="btn btn-outline mr-2" id="xlExport"><i class="fas fa-file-excel mr-2"></i> Excel Export</button><button class="btn btn-outline mr-2" id="xlTemplate"><i class="fas fa-table mr-2"></i> Template</button><label class="btn btn-outline mr-2" style="cursor:pointer;margin:0;"><i class="fas fa-file-import mr-2"></i> Excel Import<input type="file" id="xlFile" accept=".xlsx,.xls,.csv" style="display:none;"></label><button class="btn btn-primary" id="recEntry"><i class="fas fa-plus mr-2"></i> Record Entry</button></div></div>
   <div class="grid grid-cols-4 mb-4" style="gap:1.5rem"><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">MONTHLY OFFERTORY</div><h2 class="text-primary">K${mOff.toLocaleString(undefined,{minimumFractionDigits:2})}</h2></div><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">TITHES (MTD)</div><h2 class="text-success">K4,850.00</h2></div><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">ACTIVE PLEDGES</div><h2 class="text-warning">K12,400.00</h2></div><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">REVENUE GOAL</div><div class="progress-container"><div class="progress-bar" style="width:65%"></div></div><small class="text-muted">65% of K20,000</small></div></div>
   <div class="card border-0 shadow-sm"><div class="card-header bg-white p-4"><h3 class="mb-0">Recent Transactions</h3></div><div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="bg-light"><tr><th class="p-4">Type</th><th class="p-4">Contributor</th><th class="p-4 text-right">Amount</th><th class="p-4">Date</th><th class="p-4">Description</th><th class="p-4 text-right">Receipt</th></tr></thead><tbody>
   ${financeTx.map((t,i)=>`<tr><td class="p-4"><span class="type-indicator type-${esc(t.type)}"></span>${esc(t.type)}</td><td class="p-4">${esc(t.contributor)}</td><td class="p-4 text-right">K${Number(t.amount).toLocaleString(undefined,{minimumFractionDigits:2})}</td><td class="p-4">${esc(t.date)}</td><td class="p-4 text-muted">${esc(t.description)}</td><td class="p-4 text-right"><button class="btn btn-sm btn-outline" data-receipt="${i}" title="Generate receipt (print on web)"><i class="fas fa-receipt"></i></button></td></tr>`).join('')}
@@ -236,7 +264,7 @@ R.ministries = function(){
 };
 
 R.giving = function(){
-  return `<h1>Giving Verify</h1><p class="text-muted">MTN / Airtel MoMo to 0975255734 — verify Txn IDs below.</p><div class="card"><div class="table-responsive"><table class="table"><thead><tr><th class="p-4">Phone</th><th class="p-4 text-right">Amount</th><th class="p-4">Txn ID</th><th class="p-4">Status</th><th class="p-4 text-right">Action</th></tr></thead><tbody>${giving.map((g,i)=>`<tr><td class="p-4">${esc(g.phone)}</td><td class="p-4 text-right">K${g.amount}</td><td class="p-4">${esc(g.txn)}</td><td class="p-4"><span class="badge">${esc(g.status)}</span></td><td class="p-4 text-right">${g.status==="pending"?`<button class="btn btn-sm btn-success" data-verify="${i}">Verify</button>`:"✓"}</td></tr>`).join('')}</tbody></table></div></div>`;
+  return `<h1>Giving Verify</h1><p class="text-muted">MTN / Airtel MoMo to 0975255734 — verify Txn IDs below.</p><div class="mb-4"><button class="btn btn-outline" id="xlGivingExport"><i class="fas fa-file-excel mr-2"></i> Export Giving (Excel)</button></div><div class="card"><div class="table-responsive"><table class="table"><thead><tr><th class="p-4">Phone</th><th class="p-4 text-right">Amount</th><th class="p-4">Txn ID</th><th class="p-4">Status</th><th class="p-4 text-right">Action</th></tr></thead><tbody>${giving.map((g,i)=>`<tr><td class="p-4">${esc(g.phone)}</td><td class="p-4 text-right">K${g.amount}</td><td class="p-4">${esc(g.txn)}</td><td class="p-4"><span class="badge">${esc(g.status)}</span></td><td class="p-4 text-right">${g.status==="pending"?`<button class="btn btn-sm btn-success" data-verify="${i}">Verify</button>`:"✓"}</td></tr>`).join('')}</tbody></table></div></div>`;
 };
 
 R.roq = function(){
@@ -329,6 +357,73 @@ function downloadAnnouncement(i){
   showToast("Notice downloaded — generated on the web, nothing stored.");
 }
 
+// ================= TREASURER EXCEL (SheetJS, in-browser — PHP later: PhpSpreadsheet, same columns) =================
+const XL_COLS = ["Type","Contributor","Amount","Date","Description"];
+const XL_TYPES = ["offertory","tithe","donation","contribution"];
+function needXLSX(){ if(window.XLSX) return true; showToast("Excel library still loading — check connection and retry."); return false; }
+function xlStamp(){ const d=new Date(); return d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0"); }
+function exportFinanceExcel(){
+  if(!needXLSX()) return;
+  const rows = financeTx.map(t=>[t.type,t.contributor,Number(t.amount),t.date,t.description]);
+  const ws = XLSX.utils.aoa_to_sheet([XL_COLS, ...rows]);
+  ws["!cols"] = [{wch:14},{wch:24},{wch:12},{wch:12},{wch:40}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Finance");
+  XLSX.writeFile(wb, `Parish-Finance-${xlStamp()}.xlsx`);
+  showToast(`Exported ${rows.length} transactions to Excel.`);
+}
+function exportGivingExcel(){
+  if(!needXLSX()) return;
+  const rows = giving.map(g=>[g.phone,Number(g.amount),g.txn,g.status,g.date]);
+  const ws = XLSX.utils.aoa_to_sheet([["Phone","Amount","Txn ID","Status","Date"], ...rows]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Giving");
+  XLSX.writeFile(wb, `Parish-Giving-${xlStamp()}.xlsx`);
+  showToast(`Exported ${rows.length} giving records to Excel.`);
+}
+function downloadFinanceTemplate(){
+  if(!needXLSX()) return;
+  const ws = XLSX.utils.aoa_to_sheet([XL_COLS, ["offertory","Sunday 1st Mass",4850,"2026-10-04","Sunday offertory collection"]]);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Finance");
+  XLSX.writeFile(wb, "Parish-Finance-Template.xlsx");
+}
+function importFinanceExcel(file){
+  if(!needXLSX()) return;
+  const reader = new FileReader();
+  reader.onload = function(){
+    try{
+      const wb = XLSX.read(reader.result, { type: "array" });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
+      if(!data.length){ showToast("That file is empty."); return; }
+      const head = data[0].map(h=>String(h).trim().toLowerCase());
+      const need = ["type","contributor","amount","date","description"];
+      const idx = need.map(c=>head.indexOf(c));
+      if(idx.some(i=>i<0)){ showToast("Columns must be: Type | Contributor | Amount | Date | Description. Use the Template button."); return; }
+      let ok = 0, bad = 0;
+      const fresh = [];
+      for(let r=1;r<data.length;r++){
+        const row = data[r];
+        if(row.every(c=>c==="")) continue;
+        const type = String(row[idx[0]]).trim().toLowerCase();
+        const amount = parseFloat(row[idx[2]]);
+        let date = String(row[idx[3]]).trim();
+        if(!XL_TYPES.includes(type) || isNaN(amount)){ bad++; continue; }
+        if(/^\d+(\.\d+)?$/.test(date)){ const d = XLSX.SSF ? XLSX.SSF.parse_date_code(Number(date)) : null; if(d) date = `${d.y}-${String(d.m).padStart(2,"0")}-${String(d.d).padStart(2,"0")}`; }
+        fresh.push({ type, contributor: String(row[idx[1]]).trim()||"Imported", amount, date: date||"2026-09-27", description: String(row[idx[4]]).trim()||"Excel import" });
+        ok++;
+      }
+      if(!ok){ showToast(`No valid rows found (${bad} skipped). Check the template.`); return; }
+      if(!confirm(`Import ${ok} transaction${ok>1?"s":""} into Finance?${bad?` (${bad} bad rows skipped.)`:""}`)) return;
+      financeTx = [...fresh.reverse(), ...financeTx];
+      persist(); render();
+      showToast(`Imported ${ok} transactions from Excel.`);
+    }catch(err){ showToast("Could not read that file — use .xlsx or .csv from the template."); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
 // ---- router ----
 function render(){
   const page = curPage();
@@ -366,6 +461,15 @@ function bindActions(){
   const qf=$("#roqForm"); if(qf) qf.onsubmit=e=>{e.preventDefault(); alert("Demo: ROQ '"+$("#roqTitle").value+"' published (browser only)."); location.hash="#/roq";};
   const hf=$("#handForm"); if(hf) hf.onsubmit=e=>{e.preventDefault(); $("#pageRoot").innerHTML=`<div class="card" style="background:#ecfdf5;padding:2rem;text-align:center"><i class="fas fa-handshake fa-4x mb-4"></i><h2>Success!</h2><p>Handover initiated for ${esc($("#handName").value)} (demo — no email sent).</p><a href="#/overview" class="btn btn-primary">Back to Overview</a></div>`;};
   const ng=$("#newGroupBtn"); if(ng) ng.onclick=()=>alert("Demo: Group Registry opens in PHP version.");
+  // Group leader: update member count (PHP later: UPDATE groups SET member_count)
+  const gcf=$("#grpCountForm"); if(gcf) gcf.onsubmit=e=>{e.preventDefault(); const mg=myGroup(); const v=parseInt($("#grpCount").value,10); if(mg && !isNaN(v) && v>=0){ groupCounts[mg.name]=v; persist(); render(); showToast(`${mg.name} now shows ${v} members — leaders can see the change.`); }};
+  // Group leader: submit group announcement (PHP later: INSERT INTO announcements status='pending')
+  const gaf=$("#grpAnnForm"); if(gaf) gaf.onsubmit=e=>{e.preventDefault(); const mg=myGroup(); announcements.unshift({title:$("#grpAnnTitle").value,content:$("#grpAnnBody").value,category:"general",author:me.full_name,group:mg?mg.name:me.group,role:me.role_name,status:"pending",created_at:"Just now"}); persist(); render(); showToast("Group announcement sent! Secretary & Treasurer will review it.");};
+  // Treasurer Excel: export / template / import
+  const xe=$("#xlExport"); if(xe) xe.onclick=exportFinanceExcel;
+  const xt=$("#xlTemplate"); if(xt) xt.onclick=downloadFinanceTemplate;
+  const xi=$("#xlFile"); if(xi) xi.onchange=e=>{ if(e.target.files[0]) importFinanceExcel(e.target.files[0]); e.target.value=""; };
+  const xg=$("#xlGivingExport"); if(xg) xg.onclick=exportGivingExcel;
 }
 window.addEventListener("hashchange", render);
 // Back-to-top: dashboard scrolls inside .dashboard-main, not the window
