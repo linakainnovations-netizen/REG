@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
 );
 
 INSERT IGNORE INTO site_settings (setting_key, setting_value) VALUES
-('fb_page_url', 'https://web.facebook.com/groups/539879469476464/events'),
+('fb_page_url', 'https://www.facebook.com/profile.php?id=100067832423652'),
 ('yt_channel_url', 'https://www.youtube.com/'),
 ('yt_channel_id', ''),
 ('momo_mtn', '0975255734'),

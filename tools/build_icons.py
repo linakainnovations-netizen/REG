@@ -2,7 +2,7 @@
 from PIL import Image
 import os
 
-SRC = os.path.join("docs", "assets", "logo.png")
+SRC = os.path.join("assets", "images", "logo", "original_logo.jpeg")
 OUT = os.path.join("docs", "assets")
 
 im = Image.open(SRC).convert("RGBA")

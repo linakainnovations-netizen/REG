@@ -6,7 +6,7 @@
 ?>
 <header class="dashboard-header-premium">
     <div class="header-left">
-        <img src="../assets/images/other/saint_logo.png" alt="Logo" style="height: 45px; width: auto; margin-right: 1rem;">
+        <img src="../assets/images/logo/original_logo.jpeg" alt="Logo" style="height: 45px; width: auto; margin-right: 1rem;">
         <button class="menu-toggle"><i class="fas fa-indent"></i></button>
         <div class="breadcrumb">
             <span class="text-muted">Dashboard</span>

@@ -21,7 +21,7 @@ $roqs = $stmt->fetchAll();
             
             <!-- Official Header -->
             <div class="notice-header text-center mb-5">
-                <img src="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png" alt="Parish Logo" style="height: 100px; margin-bottom: 1.5rem;">
+                <img src="<?php echo BASE_URL; ?>assets/images/logo/original_logo.jpeg" alt="Parish Logo" style="height: 100px; margin-bottom: 1.5rem;">
                 <h1 style="font-family: 'Times New Roman', Times, serif; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">St. Charles Lwanga Parish - Regiment</h1>
                 <p class="mb-0 text-muted" style="text-transform: uppercase; font-size: 0.9rem; font-weight: 700;">Catholic Archdiocese of Lusaka, Zambia</p>
                 <div style="width: 100%; height: 3px; background: #1a202c; margin-top: 1.5rem; margin-bottom: 3rem;"></div>

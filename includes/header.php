@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? $pageTitle . ' | St. Charles Lwanga Regiment Portal' : 'St. Charles Lwanga Regiment Portal'; ?></title>
-    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png">
-    <link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png">
+    <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo/original_logo.jpeg">
+    <link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/logo/original_logo.jpeg">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +29,7 @@
     <!-- PWA Support -->
     <link rel="manifest" href="<?php echo BASE_URL; ?>manifest.json">
     <meta name="theme-color" content="#0f172a">
-    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets\images\logo\original_logo.jpeg">
+    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets/images/logo/original_logo.jpeg">
 </head>
 <body>
     <?php include_once 'navbar.php'; ?>
