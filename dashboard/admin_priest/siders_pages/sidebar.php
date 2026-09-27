@@ -7,7 +7,7 @@
 <aside class="dashboard-sidebar-premium">
     <a href="overview" class="sidebar-brand">
         <div class="brand-icon">
-            <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="Regiment Logo">
+            <img src="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png" alt="Regiment Logo">
         </div>
         <div class="brand-text">
             <span>St. Charles Lwanga</span>

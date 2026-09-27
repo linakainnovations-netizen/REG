@@ -124,7 +124,7 @@ function curPage(){ const h=(location.hash||"").replace("#/","").trim(); return 
 function renderSidebar(){
   const nav = NAVS[me.folder] || NAVS.members;
   const page = curPage();
-  let html = `<a href="#/overview" class="sidebar-brand"><div class="brand-icon"><img src="assets/logo.png" alt="logo" style="height:40px"></div><div class="brand-text"><span>St. Charles Lwanga</span><small>${esc(TITLES[me.folder]||"Portal")}</small></div></a><nav class="sidebar-nav">`;
+  let html = `<a href="#/overview" class="sidebar-brand"><div class="brand-icon"><img src="assets/images/other/saint_logo.png" alt="logo" style="height:40px"></div><div class="brand-text"><span>St. Charles Lwanga</span><small>${esc(TITLES[me.folder]||"Portal")}</small></div></a><nav class="sidebar-nav">`;
   nav.forEach(([section, items])=>{
     // role-gate like the PHP strpos($_SESSION['role_name'],...) checks
     const filtered = items.filter(([slug])=>{
@@ -304,7 +304,7 @@ R.invite_leader = function(){ return `<h1>Invite New Leader</h1><p class="text-m
 let saintWM = "";
 (function(){ try{ const im = new Image(); im.onload = ()=>{ saintWM = "assets/images/other/saint_charles.jpg"; }; im.src = "assets/images/other/saint_charles.jpg"; }catch(e){} })();
 function wmImg(){ return saintWM ? `<img src="${saintWM}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:85%;opacity:.09;pointer-events:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;">` : ""; }
-function docHead(){ return `<div style="display:flex;align-items:center;gap:1rem;border-bottom:3px double #1e3a8a;padding-bottom:1rem;margin-bottom:1.2rem;"><img src="assets/logo.png" style="height:64px;width:auto;"><div><div style="font-size:1.35rem;font-weight:800;color:#1e3a8a;">St. Charles Lwanga Regiment Parish</div><div style="color:#64748b;font-size:.85rem;">Chitukuko Road, Lusaka, Zambia · 0975255734 · office@stcharleslwangaregiment.org</div></div></div>`; }
+function docHead(){ return `<div style="display:flex;align-items:center;gap:1rem;border-bottom:3px double #1e3a8a;padding-bottom:1rem;margin-bottom:1.2rem;"><img src="assets/images/other/saint_logo.png" style="height:64px;width:auto;"><div><div style="font-size:1.35rem;font-weight:800;color:#1e3a8a;">St. Charles Lwanga Regiment Parish</div><div style="color:#64748b;font-size:.85rem;">Chitukuko Road, Lusaka, Zambia · 0975255734 · office@stcharleslwangaregiment.org</div></div></div>`; }
 function docFoot(){ return `<div style="margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.8rem;text-align:center;">One Faith, One People, One Portal · Generated on the web by ${esc(me.full_name)} (${esc(me.role_name)}) — no file stored.</div>`; }
 function openDoc(title, inner){
   closeDoc();

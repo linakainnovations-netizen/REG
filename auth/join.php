@@ -24,7 +24,7 @@ try {
         <div class="auth-card">
             <div class="mb-4">
                 <a href="<?php echo BASE_URL; ?>home" class="logo mb-4" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                    <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto;">
+                    <img src="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto;">
                     <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Charles Lwanga</span>
                 </a>
                 <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-top: 2rem;">Create Account</h2>

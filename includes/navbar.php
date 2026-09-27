@@ -3,7 +3,7 @@
     <div class="nav-backdrop" id="nav-backdrop"></div>
     <div class="container navbar-content">
         <a href="<?php echo BASE_URL; ?>home" class="logo" style="display: flex; align-items: center; gap: 0.6rem; text-decoration: none;">
-            <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto; object-fit: contain;">
+            <img src="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto; object-fit: contain;">
             <div style="display: flex; flex-direction: column; line-height: 1.1;">
                 <span style="font-weight: 800; font-size: 1.25rem; letter-spacing: 0.5px;">
                     <span style="color: #ef4444;">ST CHARLES</span> <span style="color: #3b82f6;">LWANGA</span>

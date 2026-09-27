@@ -87,7 +87,7 @@ class PDFGenerator {
      * Helper to get the base64 encoded logo and official header HTML
      */
     private static function getBrandedHeaderContent() {
-        $logoPath = __DIR__ . '/../assets/images/other/main_logo.png';
+        $logoPath = __DIR__ . '/../assets/images/other/saint_logo.png';
         $base64Logo = "";
         
         if (file_exists($logoPath)) {

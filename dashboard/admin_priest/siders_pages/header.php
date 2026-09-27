@@ -7,7 +7,7 @@
 <header class="dashboard-header-premium">
     <div class="header-left">
         <a href="overview" style="display: flex; align-items: center; text-decoration: none;">
-            <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="Logo" style="height: 45px; width: auto; margin-right: 1rem;">
+            <img src="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png" alt="Logo" style="height: 45px; width: auto; margin-right: 1rem;">
         </a>
         <button class="menu-toggle"><i class="fas fa-indent"></i></button>
         <div class="breadcrumb">
