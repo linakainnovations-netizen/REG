@@ -161,6 +161,23 @@ try {
         </div>
     </section>
 
+    <!-- Our Heritage: Patron & Martyrs -->
+    <section class="container mt-4 mb-4" style="padding: 2rem 0 4rem 0;">
+        <div class="card" style="padding: 0; overflow: hidden; border: none; box-shadow: var(--shadow-lg);">
+            <div class="grid grid-cols-2" style="gap: 0; align-items: stretch;">
+                <div>
+                    <img src="assets/images/other/martyrs_1885.jpg" alt="The 20 future martyrs at Bukumbi Mission, 1885" style="width: 100%; height: 100%; min-height: 320px; object-fit: cover;">
+                </div>
+                <div class="p-4" style="padding: 2.5rem; background: white;">
+                    <span class="badge" style="background: #fef3c7; color: #92400e; padding: 0.3rem 0.8rem; font-size: 0.75rem; font-weight: 700;">OUR HERITAGE</span>
+                    <h2 class="mt-4" style="font-size: 2rem; font-weight: 800; color: var(--text-main);">St. Charles Lwanga & the Martyrs</h2>
+                    <p class="text-muted" style="line-height: 1.8; margin-top: 1rem;">This photograph was taken at Bukumbi Mission (Mwanza) in September 1885. The 20 future martyrs above had gone to welcome and congratulate their newly appointed Bishop to Uganda, Msgr. Leon Livinhac — among them St. Charles Lwanga, patron of our Regiment.</p>
+                    <p class="text-muted" style="line-height: 1.8;">Our parish Regiment carries their witness forward. The full history of the church and the Regiment will be published here.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Testimonials Section -->
     <section class="container mt-4 mb-4" style="padding: 4rem 0;">
         <div class="text-center mb-4">

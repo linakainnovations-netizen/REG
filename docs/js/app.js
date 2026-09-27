@@ -300,6 +300,10 @@ R.settings = function(){ return `<h1>Portal Settings</h1><p class="text-muted">C
 R.invite_leader = function(){ return `<h1>Invite New Leader</h1><p class="text-muted">Activation-code flow from register page (PHP). Demo: copy a code.</p><div class="card p-4"><p>Demo activation code: <b>REG-2026-DEMO</b></p><button class="btn btn-primary" onclick="navigator.clipboard&&navigator.clipboard.writeText('REG-2026-DEMO');alert('Copied!')">Copy Code</button></div>`; };
 
 // ================= OFFICIAL DOCUMENTS (web print / web download — nothing saved) =================
+// Saint watermark: activates automatically once assets/images/other/saint_charles.jpg exists
+let saintWM = "";
+(function(){ try{ const im = new Image(); im.onload = ()=>{ saintWM = "assets/images/other/saint_charles.jpg"; }; im.src = "assets/images/other/saint_charles.jpg"; }catch(e){} })();
+function wmImg(){ return saintWM ? `<img src="${saintWM}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:85%;opacity:.09;pointer-events:none;-webkit-print-color-adjust:exact;print-color-adjust:exact;">` : ""; }
 function docHead(){ return `<div style="display:flex;align-items:center;gap:1rem;border-bottom:3px double #1e3a8a;padding-bottom:1rem;margin-bottom:1.2rem;"><img src="assets/logo.png" style="height:64px;width:auto;"><div><div style="font-size:1.35rem;font-weight:800;color:#1e3a8a;">St. Charles Lwanga Regiment Parish</div><div style="color:#64748b;font-size:.85rem;">Chitukuko Road, Lusaka, Zambia · 0975255734 · office@stcharleslwangaregiment.org</div></div></div>`; }
 function docFoot(){ return `<div style="margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.8rem;text-align:center;">One Faith, One People, One Portal · Generated on the web by ${esc(me.full_name)} (${esc(me.role_name)}) — no file stored.</div>`; }
 function openDoc(title, inner){
@@ -472,6 +476,26 @@ function bindActions(){
   const xg=$("#xlGivingExport"); if(xg) xg.onclick=exportGivingExcel;
 }
 window.addEventListener("hashchange", render);
+// PWA: service worker + Install App button (phones)
+(function pwaInstall(){
+  if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(function(){}); }
+  var st = document.createElement("style");
+  st.textContent = "#demo-installbtn{position:fixed;bottom:24px;right:24px;z-index:10004;display:none;align-items:center;gap:.5rem;background:#1e3a8a;color:#fff;border:none;border-radius:2rem;padding:.7rem 1.1rem;font-weight:700;font-size:.85rem;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);}";
+  document.head.appendChild(st);
+  var btn = document.createElement("button");
+  btn.id = "demo-installbtn"; btn.innerHTML = '<i class="fas fa-download"></i> Install App';
+  document.body.appendChild(btn);
+  var deferred = null;
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  window.addEventListener("beforeinstallprompt", function(e){ e.preventDefault(); deferred = e; btn.style.display = "flex"; });
+  if (isIOS) btn.style.display = "flex";
+  btn.addEventListener("click", function(){
+    if (deferred) { deferred.prompt(); deferred.userChoice.then(function(){ deferred = null; btn.style.display = "none"; }); }
+    else if (isIOS) { showToast("iPhone: tap Share, then 'Add to Home Screen' to install."); }
+    else { showToast("Use your browser menu: Install / Add to Home Screen."); }
+  });
+  window.addEventListener("appinstalled", function(){ btn.style.display = "none"; });
+})();
 // Back-to-top: dashboard scrolls inside .dashboard-main, not the window
 (function backToTop(){
   var st = document.createElement("style");

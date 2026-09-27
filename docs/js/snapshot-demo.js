@@ -135,6 +135,39 @@
     }, { passive: true });
     b.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
   })();
+  // PWA: service worker + Install App button (phones) — mirrors assets/js/main.js
+  (function pwaInstall() {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    }
+    var st = document.createElement("style");
+    st.textContent = "#demo-installbtn{position:fixed;bottom:90px;right:20px;z-index:10002;display:none;align-items:center;gap:.5rem;background:#1e3a8a;color:#fff;border:none;border-radius:2rem;padding:.7rem 1.1rem;font-weight:700;font-size:.85rem;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);}"
+      + "#demo-installbtn:hover{background:#3b82f6;}";
+    document.head.appendChild(st);
+    var btn = document.createElement("button");
+    btn.id = "demo-installbtn";
+    btn.innerHTML = '<i class="fas fa-download"></i> Install App';
+    document.body.appendChild(btn);
+    var deferred = null;
+    var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault();
+      deferred = e;
+      btn.style.display = "flex";
+    });
+    if (isIOS) btn.style.display = "flex";
+    btn.addEventListener("click", function () {
+      if (deferred) {
+        deferred.prompt();
+        deferred.userChoice.then(function () { deferred = null; btn.style.display = "none"; });
+      } else if (isIOS) {
+        toast("iPhone: tap Share, then 'Add to Home Screen' to install the parish app.");
+      } else {
+        toast("Install will appear here once the browser is ready — or use your browser menu: Install / Add to Home Screen.");
+      }
+    });
+    window.addEventListener("appinstalled", function () { btn.style.display = "none"; });
+  })();
   document.querySelectorAll("form").forEach(function (f) {
     if (f._demoIsLogin) return;
     f.addEventListener("submit", function (e) {
