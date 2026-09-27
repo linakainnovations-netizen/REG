@@ -36,10 +36,14 @@ foreach ($route in $routes.Keys) {
   # 1. Strip service-worker registration (would cache stale demo on Pages)
   $html = [regex]::Replace($html, '<!-- PWA Service Worker Registration -->[\s\S]*?</script>', '', 'IgnoreCase')
 
-  # 2. Absolute portal URLs -> relative static files
+  # 2a. Absolute asset/manifest URLs -> relative (MUST run before route rewrite)
+  $html = $html -replace '/St_Charles_Lwanga_Regiment_Portal/assets/', 'assets/'
+  $html = $html -replace '/St_Charles_Lwanga_Regiment_Portal/dashboard/', 'dashboard/'
   $html = $html -replace '/St_Charles_Lwanga_Regiment_Portal/manifest\.json', 'manifest.json'
-  $html = $html -replace '/St_Charles_Lwanga_Regiment_Portal/sw\.js', 'sw.js'
-  $html = [regex]::Replace($html, '/St_Charles_Lwanga_Regiment_Portal/([A-Za-z_\-]+)', {
+  $html = $html -replace '<form action="/St_Charles_Lwanga_Regiment_Portal/api/auth"', '<form action="#" data-demo-login'
+
+  # 2b. Absolute portal route links -> static files (only bare routes remain now)
+  $html = [regex]::Replace($html, '/St_Charles_Lwanga_Regiment_Portal/([A-Za-z_\-]+)(?=["''\?#])', {
     param($m)
     $r = $m.Groups[1].Value
     if ($r -eq 'dashboard') { return 'dashboard.html' }
@@ -47,6 +51,17 @@ foreach ($route in $routes.Keys) {
     if ($r -eq 'home') { return 'index.html' }
     if ($routes.ContainsKey($r)) { return "$r.html" }
     return "$r.html"
+  })
+
+  # 2c. Bare relative route links in body markup: href="register" -> href="register.html"
+  $routeNames = ((@($routes.Keys) + @('home','dashboard','logout')) -join '|')
+  $html = [regex]::Replace($html, 'href="(' + $routeNames + ')"', {
+    param($m)
+    $r = $m.Groups[1].Value
+    if ($r -eq 'dashboard') { return 'href="dashboard.html"' }
+    if ($r -eq 'logout') { return 'href="login.html"' }
+    if ($r -eq 'home') { return 'href="index.html"' }
+    return 'href="' + $r + '.html"'
   })
 
   # 3. Login form -> demo handler hook
