@@ -25,6 +25,14 @@ function showLoader(msg){ var ov=document.getElementById("demo-loader"); if(ov){
 function hideLoader(){ var ov=document.getElementById("demo-loader"); if(ov) ov.style.display="none"; }
 const $ = s => document.querySelector(s);
 const esc = s => String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function showToast(msg){
+  let t = document.getElementById("app-toast");
+  if(!t){ t = document.createElement("div"); t.id = "app-toast";
+    t.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10005;background:#0f172a;color:#fff;padding:.8rem 1.2rem;border-radius:.6rem;font-size:.9rem;box-shadow:0 10px 30px rgba(0,0,0,.3);display:none;";
+    document.body.appendChild(t); }
+  t.textContent = msg; t.style.display = "block";
+  clearTimeout(t._h); t._h = setTimeout(()=>t.style.display="none", 3200);
+}
 const store = {
   get(k, fb){ try{ const v = localStorage.getItem("demo_"+k); return v?JSON.parse(v):fb; }catch(e){ return fb; } },
   set(k, v){ localStorage.setItem("demo_"+k, JSON.stringify(v)); }
@@ -42,7 +50,15 @@ let financeTx = store.get("finance", DEMO_FINANCE);
 let events = store.get("events", DEMO_EVENTS);
 let live = store.get("live", DEMO_LIVE);
 let giving = store.get("giving", DEMO_GIVING);
-function persist(){ store.set("announcements",announcements); store.set("finance",financeTx); store.set("events",events); store.set("live",live); store.set("giving",giving); }
+function persist(){ store.set("announcements",announcements); store.set("finance",financeTx); store.set("events",events); store.set("live",live); store.set("giving",giving); store.set("offers",offers); }
+
+// Supplier offers (ROQ) — awarding works and persists in this browser
+let offers = store.get("offers", [
+  { roq: "Church Roof Sheets (120 pcs)", supplier: "Chilanga Hardware", price: 18500, status: "pending" },
+  { roq: "Church Roof Sheets (120 pcs)", supplier: "Lusaka Roofing Ltd", price: 19750, status: "pending" },
+  { roq: "Plastic Chairs (200 pcs)", supplier: "Kamwala Traders", price: 9800, status: "pending" },
+  { roq: "Plastic Chairs (200 pcs)", supplier: "Chilanga Hardware", price: 10400, status: "pending" },
+]);
 
 // ---- NAVS: mirror each sidebar.php ----
 const NAVS = {
@@ -175,12 +191,20 @@ R.groups = R.secretary_groups = function(){
 };
 
 R.announcements = function(){
+  const privileged = me.role_level <= 3; // priest + parish council (incl. secretary & treasurer)
   const pending = announcements.filter(a=>a.status==="pending").length;
+  // Privileged reviewers see items awaiting approval first
+  const order = announcements.map((a,i)=>({a,i})).sort((x,y)=>{
+    if(!privileged) return y.i - x.i;
+    const px = x.a.status==="pending" ? 0 : 1, py = y.a.status==="pending" ? 0 : 1;
+    return px - py || y.i - x.i;
+  });
+  const canSubmit = true;
   return `<div class="announcements-container"><div class="flex mb-4" style="justify-content:space-between;align-items:center"><div><h1>Parish Announcements</h1><p class="text-muted">Review, approve, publish. Published items show on the public Announcements page instantly.</p></div></div>
-  <div class="card p-4 mb-4"><h3 class="mb-4">Create announcement</h3><form id="annForm" class="grid" style="grid-template-columns:2fr 1fr;gap:1rem"><input id="annTitle" placeholder="Title" required class="form-control"><select id="annCat" class="form-control"><option>general</option><option>youth</option><option>liturgy</option><option>finance</option></select><textarea id="annBody" rows="3" placeholder="Announcement body..." required class="form-control" style="grid-column:1/-1"></textarea><button class="btn btn-primary" style="grid-column:1/-1">Publish Now</button></form></div>
+  <div class="card p-4 mb-4"><h3 class="mb-4">${privileged ? "Create announcement" : "Submit announcement for approval"}</h3><p class="text-muted" style="margin-bottom:1rem;">${privileged ? "Published items show on the public Announcements page instantly." : "Your submission goes to the Secretary & Treasurer — they review and add it to the main parish announcements."}</p><form id="annForm" class="grid" style="grid-template-columns:2fr 1fr;gap:1rem"><input id="annTitle" placeholder="Title" required class="form-control"><select id="annCat" class="form-control"><option>general</option><option>youth</option><option>liturgy</option><option>finance</option></select><textarea id="annBody" rows="3" placeholder="Announcement body..." required class="form-control" style="grid-column:1/-1"></textarea><button class="btn btn-primary" style="grid-column:1/-1">${privileged ? "Publish Now" : "Send for Approval"}</button></form></div>
   <div class="grid mb-4" style="grid-template-columns:1fr 1fr;gap:1rem"><div class="card p-4"><h3>${announcements.length}</h3><small class="text-muted">Total Posted</small></div><div class="card p-4"><h3>${pending}</h3><small class="text-muted">Awaiting Approval</small></div></div>
   <div class="card"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="bg-light"><tr><th class="p-4">Announcement</th><th class="p-4">Author</th><th class="p-4">Status</th><th class="p-4">Date</th><th class="p-4 text-right">Actions</th></tr></thead><tbody>
-  ${announcements.map((a,i)=>`<tr><td class="p-4"><div style="font-weight:700">${esc(a.title)}</div><small class="text-muted">${esc(a.content.slice(0,80))}...</small></td><td class="p-4">${esc(a.author)}</td><td class="p-4"><span class="badge">${esc(a.status)}</span></td><td class="p-4 text-muted">${esc(a.created_at)}</td><td class="p-4 text-right" style="white-space:nowrap">${a.status!=="published"?`<button class="btn btn-sm btn-success" data-pub="${i}"><i class="fas fa-check"></i></button>`:""}<button class="btn btn-sm btn-light text-danger" data-del="${i}"><i class="fas fa-trash-alt"></i></button></td></tr>`).join('')}
+  ${order.map(o=>{const a=o.a,i=o.i;return `<tr><td class="p-4"><div style="font-weight:700">${esc(a.title)}</div><small class="text-muted">${esc((a.content||"").slice(0,80))}...</small></td><td class="p-4">${esc(a.author)}</td><td class="p-4"><span class="badge">${esc(a.status)}</span></td><td class="p-4 text-muted">${esc(a.created_at)}</td><td class="p-4 text-right" style="white-space:nowrap">${privileged&&a.status==="pending"?`<button class="btn btn-sm btn-success" data-pub="${i}" title="Approve & publish"><i class="fas fa-check"></i></button><button class="btn btn-sm btn-light" data-reject="${i}" title="Reject"><i class="fas fa-times"></i></button>`:""}<button class="btn btn-sm btn-outline" data-dl="${i}" title="Download official notice"><i class="fas fa-download"></i></button>${privileged?`<button class="btn btn-sm btn-light text-danger" data-del="${i}"><i class="fas fa-trash-alt"></i></button>`:""}</td></tr>`;}).join('')}
   </tbody></table></div></div></div>`;
 };
 
@@ -188,8 +212,8 @@ R.finance = R.treasurer_finance = function(){
   const mOff = financeTx.filter(t=>t.type==="offertory").reduce((s,t)=>s+ +t.amount,0);
   return `<div class="finance-container"><div class="d-flex justify-content-between align-items-center mb-4"><div><h1>Collections & Finance</h1><p class="text-muted">Monitor parish revenue and contributions for the current period.</p></div><div class="btn-group"><button class="btn btn-outline mr-2" onclick="window.print()"><i class="fas fa-file-pdf mr-2"></i> Export Report</button><button class="btn btn-primary" id="recEntry"><i class="fas fa-plus mr-2"></i> Record Entry</button></div></div>
   <div class="grid grid-cols-4 mb-4" style="gap:1.5rem"><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">MONTHLY OFFERTORY</div><h2 class="text-primary">K${mOff.toLocaleString(undefined,{minimumFractionDigits:2})}</h2></div><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">TITHES (MTD)</div><h2 class="text-success">K4,850.00</h2></div><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">ACTIVE PLEDGES</div><h2 class="text-warning">K12,400.00</h2></div><div class="card p-4 finance-summary-card"><div class="text-muted small font-weight-bold mb-2">REVENUE GOAL</div><div class="progress-container"><div class="progress-bar" style="width:65%"></div></div><small class="text-muted">65% of K20,000</small></div></div>
-  <div class="card border-0 shadow-sm"><div class="card-header bg-white p-4"><h3 class="mb-0">Recent Transactions</h3></div><div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="bg-light"><tr><th class="p-4">Type</th><th class="p-4">Contributor</th><th class="p-4 text-right">Amount</th><th class="p-4">Date</th><th class="p-4">Description</th></tr></thead><tbody>
-  ${financeTx.map(t=>`<tr><td class="p-4"><span class="type-indicator type-${esc(t.type)}"></span>${esc(t.type)}</td><td class="p-4">${esc(t.contributor)}</td><td class="p-4 text-right">K${Number(t.amount).toLocaleString(undefined,{minimumFractionDigits:2})}</td><td class="p-4">${esc(t.date)}</td><td class="p-4 text-muted">${esc(t.description)}</td></tr>`).join('')}
+  <div class="card border-0 shadow-sm"><div class="card-header bg-white p-4"><h3 class="mb-0">Recent Transactions</h3></div><div class="card-body p-0"><div class="table-responsive"><table class="table table-hover mb-0"><thead class="bg-light"><tr><th class="p-4">Type</th><th class="p-4">Contributor</th><th class="p-4 text-right">Amount</th><th class="p-4">Date</th><th class="p-4">Description</th><th class="p-4 text-right">Receipt</th></tr></thead><tbody>
+  ${financeTx.map((t,i)=>`<tr><td class="p-4"><span class="type-indicator type-${esc(t.type)}"></span>${esc(t.type)}</td><td class="p-4">${esc(t.contributor)}</td><td class="p-4 text-right">K${Number(t.amount).toLocaleString(undefined,{minimumFractionDigits:2})}</td><td class="p-4">${esc(t.date)}</td><td class="p-4 text-muted">${esc(t.description)}</td><td class="p-4 text-right"><button class="btn btn-sm btn-outline" data-receipt="${i}" title="Generate receipt (print on web)"><i class="fas fa-receipt"></i></button></td></tr>`).join('')}
   </tbody></table></div></div></div></div>`;
 };
 
@@ -219,7 +243,12 @@ R.roq = function(){
   return `<h1>Procurement (ROQ)</h1><p class="text-muted">Open quotations, deadlines and offers.</p>${DEMO_ROQ.map(q=>`<div class="card p-4 mb-2 flex" style="justify-content:space-between;align-items:center"><span><strong>${esc(q.title)}</strong><br><small class="text-muted">Deadline ${esc(q.deadline)} · ${q.offers} offers · ${esc(q.status)}</small></span><a href="#/roq_submissions" class="btn btn-outline">View Offers</a></div>`).join('')}<p style="margin-top:1rem"><a href="#/roq_submit" class="btn btn-primary">+ New ROQ</a></p>`;
 };
 R.roq_submit = function(){ return `<h1>New Request for Quotation</h1><p class="text-muted">Publish a procurement request (demo saves to this browser).</p><div class="card p-4"><form id="roqForm" class="grid" style="gap:1rem"><input id="roqTitle" class="form-control" placeholder="e.g. Plastic Chairs (200 pcs)" required><input id="roqDead" type="date" class="form-control" required><textarea id="roqDesc" class="form-control" rows="3" placeholder="Specifications..."></textarea><button class="btn btn-primary">Publish ROQ</button></form></div>`; };
-R.roq_submissions = function(){ return `<h1>ROQ Offers</h1><p class="text-muted">Supplier bids awaiting award.</p><div class="card"><div class="table-responsive"><table class="table"><thead><tr><th class="p-4">ROQ</th><th class="p-4">Supplier</th><th class="p-4 text-right">Price</th><th class="p-4 text-right">Action</th></tr></thead><tbody><tr><td class="p-4">Church Roof Sheets</td><td class="p-4">Chilanga Hardware</td><td class="p-4 text-right">K18,500</td><td class="p-4 text-right"><button class="btn btn-sm btn-success" onclick="alert('Demo: offer awarded.')")">Award</button></td></tr><tr><td class="p-4">Plastic Chairs</td><td class="p-4">Kamwala Traders</td><td class="p-4 text-right">K9,800</td><td class="p-4 text-right"><button class="btn btn-sm btn-success" onclick="alert('Demo: offer awarded.')">Award</button></td></tr></tbody></table></div></div>`; };
+R.roq_submissions = function(){
+  const pending = offers.filter(o=>o.status==="pending").length;
+  return `<h1>ROQ Offers</h1><p class="text-muted">Supplier bids awaiting award — ${pending} pending.</p><div class="card"><div class="table-responsive"><table class="table"><thead><tr><th class="p-4">ROQ</th><th class="p-4">Supplier</th><th class="p-4 text-right">Price</th><th class="p-4">Status</th><th class="p-4 text-right">Actions</th></tr></thead><tbody>
+  ${offers.map((o,i)=>`<tr><td class="p-4">${esc(o.roq)}</td><td class="p-4">${esc(o.supplier)}</td><td class="p-4 text-right">K${Number(o.price).toLocaleString(undefined,{minimumFractionDigits:2})}</td><td class="p-4"><span class="badge">${esc(o.status)}</span></td><td class="p-4 text-right" style="white-space:nowrap">${o.status==="pending"?`<button class="btn btn-sm btn-success" data-award="${i}"><i class="fas fa-award"></i> Award</button>`:`<span style="color:#059669;font-weight:700;">✓ Awarded</span>`} <button class="btn btn-sm btn-outline" data-quote="${i}" title="Generate supplier quotation (print on web)"><i class="fas fa-file-invoice"></i> Quote</button></td></tr>`).join('')}
+  </tbody></table></div></div>`;
+};
 
 R.secretary_rosters = function(){
   return `<h1>Plan Rosters</h1><p class="text-muted">Sunday Mass, cleaning and readers rota.</p><div class="card"><div class="table-responsive"><table class="table"><thead><tr><th class="p-4">Week</th><th class="p-4">Sunday Mass</th><th class="p-4">Cleaning</th><th class="p-4">Readers</th></tr></thead><tbody>${DEMO_ROSTERS.map(r=>`<tr><td class="p-4">${esc(r.week)}</td><td class="p-4">${esc(r.sunday_mass)}</td><td class="p-4">${esc(r.cleaning)}</td><td class="p-4">${esc(r.readers)}</td></tr>`).join('')}</tbody></table></div></div>`;
@@ -242,6 +271,64 @@ R.handover = function(){
 R.settings = function(){ return `<h1>Portal Settings</h1><p class="text-muted">Church name, Mass times, MoMo number (demo read-only).</p><div class="card p-4"><p><b>Parish:</b> St. Charles Lwanga Regiment</p><p><b>MoMo:</b> 0975255734 (MTN/Airtel)</p><p><b>Sunday Masses:</b> 07:00 & 09:30</p><button class="btn btn-outline" onclick="alert('Demo: settings saved in PHP version.')">Save (demo)</button></div>`; };
 R.invite_leader = function(){ return `<h1>Invite New Leader</h1><p class="text-muted">Activation-code flow from register page (PHP). Demo: copy a code.</p><div class="card p-4"><p>Demo activation code: <b>REG-2026-DEMO</b></p><button class="btn btn-primary" onclick="navigator.clipboard&&navigator.clipboard.writeText('REG-2026-DEMO');alert('Copied!')">Copy Code</button></div>`; };
 
+// ================= OFFICIAL DOCUMENTS (web print / web download — nothing saved) =================
+function docHead(){ return `<div style="display:flex;align-items:center;gap:1rem;border-bottom:3px double #1e3a8a;padding-bottom:1rem;margin-bottom:1.2rem;"><img src="assets/logo.png" style="height:64px;width:auto;"><div><div style="font-size:1.35rem;font-weight:800;color:#1e3a8a;">St. Charles Lwanga Regiment Parish</div><div style="color:#64748b;font-size:.85rem;">Chitukuko Road, Lusaka, Zambia · 0975255734 · office@stcharleslwangaregiment.org</div></div></div>`; }
+function docFoot(){ return `<div style="margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.8rem;text-align:center;">One Faith, One People, One Portal · Generated on the web by ${esc(me.full_name)} (${esc(me.role_name)}) — no file stored.</div>`; }
+function openDoc(title, inner){
+  closeDoc();
+  const m = document.createElement("div"); m.id = "docModal";
+  m.innerHTML = `<div class="doc-backdrop"></div><div class="doc-paper"><div class="doc-actions"><button class="btn btn-primary btn-sm" id="docPrint"><i class="fas fa-print"></i> Print</button> <button class="btn btn-outline btn-sm" id="docClose">Close</button></div><h2 style="text-align:center;color:#1e3a8a;letter-spacing:.15em;margin:.5rem 0 1rem;">${esc(title)}</h2>${docHead()}${inner}${docFoot()}</div>`;
+  document.body.appendChild(m);
+  m.querySelector("#docClose").onclick = closeDoc;
+  m.querySelector(".doc-backdrop").onclick = closeDoc;
+  m.querySelector("#docPrint").onclick = ()=>window.print();
+}
+function closeDoc(){ const m = document.getElementById("docModal"); if(m) m.remove(); }
+// Amount in words (Kwacha + Ngwee)
+function amountWords(n){
+  const ones=["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+  const tens=["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+  function w(x){ x=Math.floor(x); if(x<20) return ones[x]; if(x<100) return tens[Math.floor(x/10)]+(x%10?" "+ones[x%10]:""); if(x<1000) return ones[Math.floor(x/100)]+" Hundred"+(x%100?" "+w(x%100):""); if(x<1000000) return w(Math.floor(x/1000))+" Thousand"+(x%1000?" "+w(x%1000):""); return w(Math.floor(x/1000000))+" Million"+(x%1000000?" "+w(x%1000000):""); }
+  const k=Math.floor(n), ng=Math.round((n-k)*100);
+  return w(k||0)+" Kwacha"+(ng?" and "+w(ng)+" Ngwee":"")+" Only";
+}
+function printReceipt(i){
+  const t = financeTx[i]; if(!t) return;
+  const no = "R-2026-" + String(1001+i);
+  openDoc("OFFICIAL RECEIPT", `<table style="width:100%;margin-bottom:1rem;font-size:.95rem;">
+    <tr><td style="padding:.3rem 0;color:#64748b;">Receipt No:</td><td style="font-weight:800;">${no}</td><td style="color:#64748b;">Date:</td><td style="font-weight:700;">${esc(t.date)}</td></tr>
+    <tr><td style="color:#64748b;">Received From:</td><td colspan="3" style="font-weight:700;">${esc(t.contributor)}</td></tr>
+    <tr><td style="color:#64748b;">Being Payment Of:</td><td colspan="3">${esc(t.description)} (${esc(t.type)})</td></tr>
+    <tr><td style="color:#64748b;">Amount:</td><td colspan="3" style="font-size:1.3rem;font-weight:800;color:#1e3a8a;">K${Number(t.amount).toLocaleString(undefined,{minimumFractionDigits:2})}</td></tr>
+    <tr><td style="color:#64748b;">In Words:</td><td colspan="3" style="font-style:italic;">${amountWords(Number(t.amount))}</td></tr></table>
+    <div style="display:flex;justify-content:space-between;margin-top:2.5rem;"><div style="text-align:center;"><div style="border-top:1px solid #1e293b;padding-top:.3rem;min-width:180px;">Received By<br><small>${esc(me.full_name)} (${esc(me.role_name)})</small></div></div><div style="text-align:center;"><div style="border-top:1px solid #1e293b;padding-top:.3rem;min-width:180px;">Parish Stamp<br><small>St. Charles Lwanga Regiment</small></div></div></div>`);
+}
+function printQuote(i){
+  const o = offers[i]; if(!o) return;
+  const no = "Q-2026-" + String(501+i);
+  openDoc("SUPPLIER QUOTATION", `<table style="width:100%;margin-bottom:1rem;font-size:.95rem;">
+    <tr><td style="color:#64748b;">Quotation No:</td><td style="font-weight:800;">${no}</td><td style="color:#64748b;">Date:</td><td style="font-weight:700;">27 Sep 2026</td></tr>
+    <tr><td style="color:#64748b;">Supplier:</td><td colspan="3" style="font-weight:700;">${esc(o.supplier)}</td></tr>
+    <tr><td style="color:#64748b;">Valid Until:</td><td colspan="3">11 Oct 2026 (14 days)</td></tr></table>
+    <table style="width:100%;border-collapse:collapse;font-size:.95rem;"><thead><tr style="background:#1e3a8a;color:#fff;"><th style="padding:.6rem;text-align:left;">Item</th><th style="padding:.6rem;text-align:right;">Amount (K)</th></tr></thead>
+    <tbody><tr><td style="padding:.6rem;border-bottom:1px solid #e2e8f0;">${esc(o.roq)}</td><td style="padding:.6rem;border-bottom:1px solid #e2e8f0;text-align:right;font-weight:700;">${Number(o.price).toLocaleString(undefined,{minimumFractionDigits:2})}</td></tr>
+    <tr><td style="padding:.6rem;font-weight:800;">TOTAL</td><td style="padding:.6rem;text-align:right;font-weight:800;color:#1e3a8a;">K${Number(o.price).toLocaleString(undefined,{minimumFractionDigits:2})}</td></tr></tbody></table>
+    <p style="font-style:italic;color:#475569;">${amountWords(Number(o.price))}</p>
+    <div style="display:flex;justify-content:space-between;margin-top:2.5rem;"><div style="text-align:center;"><div style="border-top:1px solid #1e293b;padding-top:.3rem;min-width:180px;">Prepared By<br><small>${esc(me.full_name)} (${esc(me.role_name)})</small></div></div><div style="text-align:center;"><div style="border-top:1px solid #1e293b;padding-top:.3rem;min-width:180px;">Approved By<br><small>Parish Priest</small></div></div></div>`);
+}
+function downloadAnnouncement(i){
+  const a = announcements[i]; if(!a) return;
+  const safe = (a.title||"notice").replace(/[^a-z0-9]+/gi,"-").slice(0,40);
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${esc(a.title)} — Official Notice</title><style>body{font-family:Georgia,serif;max-width:700px;margin:2rem auto;padding:0 1rem;color:#1e293b;}header{border-bottom:3px double #1e3a8a;padding-bottom:1rem;margin-bottom:1.5rem;}h1{font-size:1.6rem;} .meta{color:#64748b;font-size:.9rem;} .body{line-height:1.8;white-space:pre-wrap;} footer{margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.85rem;text-align:center;}</style></head><body><header><h2 style="margin:0;color:#1e3a8a;">St. Charles Lwanga Regiment Parish</h2><div class="meta">Chitukuko Road, Lusaka · OFFICIAL NOTICE · ${(a.category||"general").toUpperCase()}</div></header><h1>${esc(a.title)}</h1><div class="meta">Issued: ${esc(a.created_at)} · By: ${esc(a.author)} · Status: ${esc(a.status).toUpperCase()}</div><div class="body">${esc(a.content)}</div><footer>One Faith, One People, One Portal · office@stcharleslwangaregiment.org</footer></body></html>`;
+  const blob = new Blob([html], { type: "text/html" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Notice-" + safe + ".html";
+  document.body.appendChild(link); link.click();
+  setTimeout(()=>{ URL.revokeObjectURL(link.href); link.remove(); }, 500);
+  showToast("Notice downloaded — generated on the web, nothing stored.");
+}
+
 // ---- router ----
 function render(){
   const page = curPage();
@@ -262,8 +349,9 @@ function render(){
 
 function bindActions(){
   document.querySelectorAll("[data-login]").forEach(b=>b.onclick=()=>{ store.set("session",{username:b.dataset.login,at:Date.now()}); location.reload(); });
-  const af=$("#annForm"); if(af) af.onsubmit=e=>{e.preventDefault(); announcements.unshift({title:$("#annTitle").value,content:$("#annBody").value,author:me.full_name,status:"published",created_at:"Just now"}); persist(); render();};
-  document.querySelectorAll("[data-pub]").forEach(b=>b.onclick=()=>{ announcements[+b.dataset.pub].status="published"; persist(); render(); });
+  const af=$("#annForm"); if(af) af.onsubmit=e=>{e.preventDefault(); const privileged=me.role_level<=3; const st=privileged?"published":"pending"; announcements.unshift({title:$("#annTitle").value,content:$("#annBody").value,category:$("#annCat").value,author:me.full_name,role:me.role_name,status:st,created_at:"Just now"}); persist(); render(); showToast(privileged?"Announcement published.":"Sent! The Secretary & Treasurer will review it for the main announcements.");};
+  document.querySelectorAll("[data-pub]").forEach(b=>b.onclick=()=>{ announcements[+b.dataset.pub].status="published"; persist(); render(); showToast("Approved & published to main announcements."); });
+  document.querySelectorAll("[data-reject]").forEach(b=>b.onclick=()=>{ if(confirm("Reject this submission?")){ announcements[+b.dataset.reject].status="rejected"; persist(); render(); } });
   document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{ if(confirm("Delete?")){ announcements.splice(+b.dataset.del,1); persist(); render(); } });
   const rec=$("#recEntry"); if(rec) rec.onclick=()=>{ const a=prompt("Amount (K)?","500"); if(a){ financeTx.unshift({type:"offertory",contributor:me.full_name,amount:parseFloat(a)||0,date:"2026-09-27",description:"Manual entry (demo)"}); persist(); render(); } };
   const ef=$("#evForm"); if(ef) ef.onsubmit=e=>{e.preventDefault(); events.unshift({title:$("#evTitle").value,date:$("#evDate").value,venue:$("#evVenue").value||"Parish Church",status:"scheduled"}); persist(); render();};
@@ -271,6 +359,10 @@ function bindActions(){
   const lf=$("#liveForm"); if(lf) lf.onsubmit=e=>{e.preventDefault(); live.unshift({message:$("#liveMsg").value,created_at:"Just now"}); persist(); render();};
   document.querySelectorAll("[data-livedel]").forEach(b=>b.onclick=()=>{ live.splice(+b.dataset.livedel,1); persist(); render(); });
   document.querySelectorAll("[data-verify]").forEach(b=>b.onclick=()=>{ giving[+b.dataset.verify].status="verified"; persist(); render(); });
+  document.querySelectorAll("[data-award]").forEach(b=>b.onclick=()=>{ const o=offers[+b.dataset.award]; if(confirm(`Award "${o.roq}" to ${o.supplier} for K${Number(o.price).toLocaleString()}?`)){ o.status="awarded"; persist(); render(); showToast(`Awarded to ${o.supplier}.`); } });
+  document.querySelectorAll("[data-quote]").forEach(b=>b.onclick=()=>printQuote(+b.dataset.quote));
+  document.querySelectorAll("[data-receipt]").forEach(b=>b.onclick=()=>printReceipt(+b.dataset.receipt));
+  document.querySelectorAll("[data-dl]").forEach(b=>b.onclick=()=>downloadAnnouncement(+b.dataset.dl));
   const qf=$("#roqForm"); if(qf) qf.onsubmit=e=>{e.preventDefault(); alert("Demo: ROQ '"+$("#roqTitle").value+"' published (browser only)."); location.hash="#/roq";};
   const hf=$("#handForm"); if(hf) hf.onsubmit=e=>{e.preventDefault(); $("#pageRoot").innerHTML=`<div class="card" style="background:#ecfdf5;padding:2rem;text-align:center"><i class="fas fa-handshake fa-4x mb-4"></i><h2>Success!</h2><p>Handover initiated for ${esc($("#handName").value)} (demo — no email sent).</p><a href="#/overview" class="btn btn-primary">Back to Overview</a></div>`;};
   const ng=$("#newGroupBtn"); if(ng) ng.onclick=()=>alert("Demo: Group Registry opens in PHP version.");
