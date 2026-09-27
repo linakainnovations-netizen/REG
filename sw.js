@@ -5,7 +5,7 @@ const ASSETS_TO_CACHE = [
   '/St_Charles_Lwanga_Regiment_Portal/index.php',
   '/St_Charles_Lwanga_Regiment_Portal/assets/css/style.css',
   '/St_Charles_Lwanga_Regiment_Portal/assets/js/main.js',
-  '/St_Charles_Lwanga_Regiment_Portal/assets/images/other/main_logo.png',
+  '/St_Charles_Lwanga_Regiment_Portal/assets/images/logo/original_logo.jpeg',
   '/St_Charles_Lwanga_Regiment_Portal/assets/images/other/homepage.jpg',
   '/St_Charles_Lwanga_Regiment_Portal/assets/images/other/parish.jpg',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
