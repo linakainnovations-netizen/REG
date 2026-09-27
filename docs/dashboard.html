@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | St. Charles Lwanga Regiment (Demo)</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- SAME CSS as the PHP build -->
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/main/dashboard-base.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/main/head-side.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/main/main.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/pages_styles/overview.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/pages_styles/users.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/pages_styles/groups.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/pages_styles/finance.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/pages_styles/announcements.css">
+<link rel="stylesheet" href="dashboard/admin_priest/assets/pages_styles/handover.css">
+<style>
+.demo-strip{background:#f59e0b;color:#0f172a;font-weight:700;font-size:.8rem;padding:.45rem 1rem;text-align:center}
+.dashboard-wrapper{display:flex;min-height:calc(100vh - 40px)}
+.dashboard-main{flex:1;padding:1.5rem;min-width:0;background:#f8fafc}
+.sidebar-switch{background:#0f172a;color:#cbd5e1;border-radius:.6rem;padding:.7rem;margin:.4rem 0;font-size:.8rem}
+.sidebar-switch select{width:100%;margin-top:.4rem;padding:.45rem;border-radius:.4rem}
+@media(max-width:900px){.dashboard-sidebar-premium{display:none}.dashboard-sidebar-premium.open{display:flex;position:fixed;z-index:99;height:100vh}}
+</style>
+</head>
+<body class="dashboard-body">
+<div class="demo-strip">STATIC DEMO — same pages as PHP build · password REGIMENT · data saves in this browser only · <a href="index.html" style="text-decoration:underline">all accounts</a> · <a href="#" id="logoutTop" style="text-decoration:underline">log out</a></div>
+<div class="dashboard-wrapper">
+<aside class="dashboard-sidebar-premium" id="sidebar"></aside>
+<main class="dashboard-main">
+<header class="dashboard-header-premium" id="dashHeader" style="margin-bottom:1.2rem"></header>
+<div class="content-inner" id="pageRoot"><p>Loading…</p></div>
+</main>
+</div>
+<script src="js/demo-data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -42,7 +42,7 @@ if ($hasStructuredRole) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><?php echo $pageTitle; ?> | St. Paul Chipata Portal</title>
+        <title><?php echo $pageTitle; ?> | St. Charles Lwanga Regiment Portal</title>
         <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/other/main_logo.png">
         <link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/other/main_logo.png">
         

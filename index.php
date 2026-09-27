@@ -34,6 +34,14 @@ switch ($path) {
     case 'register':
         require_once 'auth/register.php';
         break;
+
+    case 'join':
+        require_once 'auth/join.php';
+        break;
+
+    case 'contact':
+        require_once 'public/contact.php';
+        break;
         
     case 'logout':
         require_once 'auth/logout.php';
@@ -93,6 +101,34 @@ switch ($path) {
  
     case 'event_request':
         require_once 'public/event_request.php';
+        break;
+
+    case 'media':
+        require_once 'public/media_page.php';
+        break;
+
+    case 'giving':
+        require_once 'public/giving.php';
+        break;
+
+    case 'giving_callback':
+        require_once 'public/giving_callback.php';
+        break;
+
+    case 'live-updates':
+        require_once 'public/live_updates.php';
+        break;
+
+    case 'bulletins':
+        require_once 'public/bulletins.php';
+        break;
+
+    case 'download':
+        require_once 'public/download.php';
+        break;
+
+    case 'events':
+        require_once 'public/events.php';
         break;
 
     case 'api/auth':

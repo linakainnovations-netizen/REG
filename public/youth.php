@@ -13,7 +13,7 @@ $youthGroups = $stmt->fetchAll();
 
 <section class="hero-premium" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 5rem 0;">
     <div class="container text-center">
-        <h1>St. Paul Youth Ministry</h1>
+        <h1>St. Charles Lwanga Youth Ministry</h1>
         <p style="opacity: 0.9; max-width: 600px; margin: 0 auto;">Empowering the next generation through faith, community, and service.</p>
     </div>
 </section>
@@ -59,7 +59,7 @@ $youthGroups = $stmt->fetchAll();
 
             <div class="card mt-4" style="background: var(--primary-color); color: white; border: none;">
                 <h3>Get Involved</h3>
-                <p style="opacity: 0.8; font-size: 0.9rem; margin: 1rem 0;">Are you a youth member at St. Paul? Join our digital community to stay updated on conferences, liturgies, and outings.</p>
+                <p style="opacity: 0.8; font-size: 0.9rem; margin: 1rem 0;">Are you a youth member at St. Charles Lwanga Regiment? Join our digital community to stay updated on conferences, liturgies, and outings.</p>
                 <a href="register" class="btn" style="background: white; color: var(--primary-color); font-weight: 700; width: 100%;">Create Account</a>
             </div>
         </div>

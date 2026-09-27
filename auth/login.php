@@ -5,7 +5,7 @@ include_once 'includes/header.php';
 
 <div class="auth-page">
     <!-- Visual Half -->
-    <div class="auth-visual" style="background-image: url('<?php echo BASE_URL; ?>assets/images/other/goodmother.jpeg');">
+    <div class="auth-visual" style="background-image: url('<?php echo BASE_URL; ?>assets/images/other/login.jpg');">
         <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10; color: white;">
             <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Faith & <br>Technology</h1>
             <p style="font-size: 1.25rem; opacity: 0.9; max-width: 400px;">Managing our community with transparency, tradition, and digital innovation.</p>
@@ -17,8 +17,8 @@ include_once 'includes/header.php';
         <div class="auth-card">
             <div class="mb-4">
                 <a href="../home" class="logo mb-4" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                    <img src="assets/images/other/main_logo.png" alt="St. Paul Logo" style="height: 40px; width: auto;">
-                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Paul Chipata</span>
+                    <img src="assets/images/other/main_logo.png" alt="Regiment Logo" style="height: 40px; width: auto;">
+                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Charles Lwanga Regiment</span>
                 </a>
                 <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-top: 2rem;">Welcome Back</h2>
                 <p style="color: #64748b; font-weight: 500;">Please enter your credentials to access the portal.</p>

@@ -1,0 +1,33 @@
+/* Role Specific Dashboard Styles */
+.dashboard-wrapper {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dashboard-main {
+    flex-grow: 1;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.content-inner {
+    padding: 2.5rem;
+    flex-grow: 1;
+}
+
+/* --- Global Responsive Grids --- */
+@media (max-width: 1024px) {
+    .content-inner { padding: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    .content-inner { padding: 1rem; }
+    
+    .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+}

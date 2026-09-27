@@ -7,10 +7,10 @@
 <aside class="dashboard-sidebar-premium">
     <div class="sidebar-brand">
         <div class="brand-icon" style="background: transparent; box-shadow: none;">
-            <img src="../assets/images/other/main_logo.png" alt="St. Paul Logo" style="height: 48px; width: auto;">
+            <img src="../assets/images/other/main_logo.png" alt="Regiment Logo" style="height: 48px; width: auto;">
         </div>
         <div class="brand-text">
-            <span>St. Paul</span>
+            <span>St. Charles Lwanga</span>
             <small>SCC Zonez Portal</small>
         </div>
     </div>

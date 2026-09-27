@@ -23,10 +23,10 @@ if ($step === 2) {
 
 <div class="auth-page">
     <!-- Visual Half -->
-    <div class="auth-visual" style="background-image: url('assets/images/other/goodmorning.jpeg');">
+    <div class="auth-visual" style="background-image: url('assets/images/other/signup.jpg');">
         <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10; color: white;">
             <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Leadership <br>Activation.</h1>
-            <p style="font-size: 1.25rem; opacity: 0.9; max-width: 400px;">Setting up your secure administrative access to the St. Paul Chipata Portal.</p>
+            <p style="font-size: 1.25rem; opacity: 0.9; max-width: 400px;">Setting up your secure administrative access to the St. Charles Lwanga Regiment Portal.</p>
         </div>
     </div>
 
@@ -35,8 +35,8 @@ if ($step === 2) {
         <div class="auth-card">
             <div class="mb-4">
                 <a href="home" class="logo mb-4" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                    <img src="assets/images/other/main_logo.png" alt="St. Paul Logo" style="height: 40px; width: auto;">
-                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Paul Chipata</span>
+                    <img src="assets/images/other/main_logo.png" alt="Regiment Logo" style="height: 40px; width: auto;">
+                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Charles Lwanga Regiment</span>
                 </a>
                 
                 <?php if ($step === 1): ?>

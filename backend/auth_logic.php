@@ -27,7 +27,7 @@ function handleForgotPasswordRequest($pdo) {
 
         // Send Email (Assuming MailManager is configured)
         require_once __DIR__ . '/mail_manager.php';
-        $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/St._Paul_Chipata_Portal/reset_password?token=" . $token;
+        $resetLink = "http://" . $_SERVER['HTTP_HOST'] . "/St_Charles_Lwanga_Regiment_Portal/reset_password?token=" . $token;
         $body = "<h2>Password Reset</h2><p>You requested a password reset. Click below to continue:</p><a href='$resetLink'>Reset My Password</a><p>This link expires in 1 hour.</p>";
         MailManager::send($email, "Password Reset Request", $body);
 
@@ -102,6 +102,9 @@ switch ($action) {
     case 'reset_password_submit':
         handleResetPasswordSubmit($pdo);
         break;
+    case 'member_register':
+        handleMemberRegister($pdo);
+        break;
     default:
         $_SESSION['error'] = "Invalid action.";
         header('Location: ../login');
@@ -137,10 +140,59 @@ function handleLogin($pdo) {
 
 
 /**
+ * Handle Public Member Registration (Join Us)
+ * Creates a plain Member account (role_level 10).
+ */
+function handleMemberRegister($pdo) {
+    $full_name = trim($_POST['full_name'] ?? '');
+    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $group_id = !empty($_POST['group_id']) ? intval($_POST['group_id']) : null;
+
+    if (!$full_name || !$username || !$phone || strlen($password) < 8) {
+        $_SESSION['error'] = "Please fill name, username, phone and a password of 8+ characters.";
+        header('Location: ../join');
+        exit;
+    }
+
+    try {
+        // Unique username / email check
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?" . ($email ? " OR email = ?" : ""));
+        $stmt->execute($email ? [$username, $email] : [$username]);
+        if ($stmt->fetch()) {
+            $_SESSION['error'] = "That username or email is already taken.";
+            header('Location: ../join');
+            exit;
+        }
+
+        $roleStmt = $pdo->query("SELECT id FROM roles WHERE role_level = 10 LIMIT 1");
+        $role = $roleStmt->fetch();
+        if (!$role) {
+            $_SESSION['error'] = "Member role not configured. Contact the administrator.";
+            header('Location: ../join');
+            exit;
+        }
+
+        $customId = generateCustomId($pdo);
+        $stmt = $pdo->prepare("INSERT INTO users (custom_id, full_name, email, username, password, role_id, group_id, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$customId, $full_name, $email ?: null, $username, password_hash($password, PASSWORD_DEFAULT), $role['id'], $group_id, $phone]);
+
+        $_SESSION['success'] = "Welcome, $full_name! Account created — please sign in.";
+        header('Location: ../login');
+    } catch (PDOException $e) {
+        $_SESSION['error'] = "Registration failed. Please try again.";
+        header('Location: ../join');
+    }
+    exit;
+}
+
+/**
  * Handle Activation Code Verification
  */
 function handleVerifyActivationCode($pdo) {
-    $code = trim($_POST['activation_code']);
+    $code = trim($_POST['activation_code'] ?? ($_POST['code'] ?? ''));
     $stmt = $pdo->prepare("SELECT * FROM invitations WHERE activation_code = ? AND expires_at > NOW()");
     $stmt->execute([$code]);
     $invitation = $stmt->fetch();

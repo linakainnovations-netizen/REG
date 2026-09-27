@@ -52,10 +52,10 @@ $activities = $activityStmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <div class="card overview-card" style="background: #eff6ff;">
-            <i class="fas fa-chart-line fa-2x" style="color: #2563eb;"></i>
-            <h3>Financials</h3>
-            <p>View total revenue.</p>
-            <a href="finance" class="btn btn-outline" style="width: 100%;">Finance</a>
+            <i class="fas fa-hands-helping fa-2x" style="color: #2563eb;"></i>
+            <h3>Ministries</h3>
+            <p>Volunteers & join requests.</p>
+            <a href="ministries" class="btn btn-outline" style="width: 100%;">Ministries</a>
         </div>
     </div>
 

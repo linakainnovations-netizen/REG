@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // Trigger Email to Leader (Mock leader email for now, in real life we fetch leader of $group_id)
             // For now, let's assume we send to a default admin if leader not found
-            MailManager::sendApprovalRequest('council-leader@stpaulchipata.org', $title, $token);
+            MailManager::sendApprovalRequest('office@stcharleslwangaregiment.org', $title, $token);
             
             $success = "Request submitted! Verification email sent to the Group Leader.";
         } catch (PDOException $e) {

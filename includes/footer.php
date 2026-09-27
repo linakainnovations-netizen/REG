@@ -1,15 +1,19 @@
     </main>
 
-    <footer style="background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('assets/images/other/footer_slide_2.jpeg'); background-size: cover; background-position: center; color: white; padding: 4rem 0 2rem 0; margin-top: 4rem; position: relative; overflow: hidden;">
+    <footer style="background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.92)), url('<?php echo BASE_URL; ?>assets/images/other/footer.jpg'); background-size: cover; background-position: center; color: white; padding: 4rem 0 2rem 0; margin-top: 4rem; position: relative; overflow: hidden;">
         <div class="container">
             <div class="footer-layout-grid">
                 <!-- About Column -->
                 <div>
                     <h3 style="color: white; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                        <img src="assets/images/other/main_logo.png" alt="St. Paul Logo" style="height: 40px; width: auto; object-fit: contain;"> St. Paul Chipata
+                        <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto; object-fit: contain;"> St. Charles Lwanga Regiment
                     </h3>
+                    <img src="<?php echo BASE_URL; ?>assets/images/other/mass.jpeg" alt="Holy Mass at St. Charles Lwanga Regiment Parish" style="width: 100%; height: 140px; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.15);">
                     <p style="color: #94a3b8; line-height: 1.6; font-size: 0.95rem;">
-                        Empowering our Parish through technology, transparency, and communion. One faith, one portal.
+                        Empowering our Parish through technology, transparency, and communion. One faith, one portal. Serving Regiment Parish since 1940 — 80 Years celebrated 19th January 2020.
+                    </p>
+                    <p style="color: #e2e8f0; font-size: 0.85rem; margin-top: 1rem;">
+                        <i class="fas fa-church mr-2" style="color: #f59e0b;"></i> Sun Masses 06:30, 09:00, 11:00 · Sat 17:00
                     </p>
                 </div>
 
@@ -17,10 +21,10 @@
                 <div>
                     <h4 style="color: white; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Explore Ministries</h4>
                     <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; padding: 0;">
-                        <li><a href="ministries" style="color: #94a3b8; text-decoration: none;">Ministries Hub</a></li>
-                        <li><a href="announcements" style="color: #94a3b8; text-decoration: none;">Announcements</a></li>
-                        <li><a href="rosters" style="color: #94a3b8; text-decoration: none;">Liturgy Rosters</a></li>
-                        <li><a href="offertory" style="color: #94a3b8; text-decoration: none;">Financial Transparency</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>ministries" style="color: #94a3b8; text-decoration: none;">Ministries Hub</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>announcements" style="color: #94a3b8; text-decoration: none;">Announcements</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>rosters" style="color: #94a3b8; text-decoration: none;">Liturgy Rosters</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>offertory" style="color: #94a3b8; text-decoration: none;">Financial Transparency</a></li>
                     </ul>
                 </div>
 
@@ -28,10 +32,10 @@
                 <div>
                     <h4 style="color: white; margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Join the Portal</h4>
                     <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; padding: 0;">
-                        <li><a href="login" style="color: #94a3b8; text-decoration: none;">Leader Dashboard</a></li>
-                        <li><a href="register" style="color: #94a3b8; text-decoration: none;">Member Registration</a></li>
-                        <li><a href="roq" style="color: #94a3b8; text-decoration: none;">Procurement Hub (ROQ)</a></li>
-                        <li><a href="event-request" style="color: #94a3b8; text-decoration: none;">Post Event Notice</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>login" style="color: #94a3b8; text-decoration: none;">Leader Dashboard</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>join" style="color: #94a3b8; text-decoration: none;">Member Registration</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>roq" style="color: #94a3b8; text-decoration: none;">Procurement Hub (ROQ)</a></li>
+                        <li><a href="<?php echo BASE_URL; ?>contact" style="color: #94a3b8; text-decoration: none;">Contact the Parish</a></li>
                     </ul>
                 </div>
 
@@ -42,14 +46,17 @@
                         <!-- Leaflet map will render here -->
                     </div>
                     <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 1rem;">
-                        <i class="fas fa-map-marker-alt mr-2" style="color: #ef4444;"></i> Main Road, Chipata, Zambia
+                        <i class="fas fa-map-marker-alt mr-2" style="color: #ef4444;"></i> Chitukuko Road, Lusaka, Zambia
+                    </p>
+                    <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 0.5rem;">
+                        <i class="fas fa-phone mr-2" style="color: #25D366;"></i> 0975 255 734
                     </p>
                 </div>
             </div>
 
             <!-- Footer Bottom -->
             <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 4rem; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; color: #64748b; font-size: 0.875rem; flex-wrap: wrap; gap: 1rem;">
-                <p>&copy; <?php echo date('Y'); ?> St. Paul Chipata Parish. All rights reserved. | Developed by <a href="https://denfas-simfukwe202.github.io/denfas_simfukwe/" target="_blank" style="text-decoration: none; font-weight: 800; letter-spacing: 0.5px;">
+                <p>&copy; <?php echo date('Y'); ?> St. Charles Lwanga Regiment Parish. All rights reserved. | Developed by <a href="https://denfas-simfukwe202.github.io/denfas_simfukwe/" target="_blank" style="text-decoration: none; font-weight: 800; letter-spacing: 0.5px;">
                     <span style="color: var(--primary-light);">DENFAS</span> <span style="color: var(--secondary-color);">SIMFUKWE</span>
                 </a></p>
                 <div class="flex" style="gap: 1.5rem; font-size: 1.25rem;">
@@ -73,13 +80,13 @@
                 <p style="margin: 0; font-size: 0.8rem; opacity: 0.9;">Contact Developer</p>
             </div>
             <div style="padding: 1rem;">
-                <a href="https://wa.me/260761644044" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; color: #334155; text-decoration: none; border-radius: 0.5rem; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">
+                <a href="https://wa.me/260975255734" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; color: #334155; text-decoration: none; border-radius: 0.5rem; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">
                     <i class="fab fa-whatsapp" style="color: #25D366; font-size: 1.5rem;"></i>
-                    <span>WhatsApp <br><small>0761644044</small></span>
+                    <span>WhatsApp <br><small>0975255734</small></span>
                 </a>
-                <a href="tel:0979630513" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; color: #334155; text-decoration: none; border-radius: 0.5rem; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">
+                <a href="tel:0975255734" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; color: #334155; text-decoration: none; border-radius: 0.5rem; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">
                     <i class="fas fa-phone-alt" style="color: #3b82f6; font-size: 1.25rem; width: 1.5rem; text-align: center;"></i>
-                    <span>Call or SMS <br><small>0979630513</small></span>
+                    <span>Call or SMS <br><small>0975255734</small></span>
                 </a>
                 <a href="https://denfas-simfukwe202.github.io/denfas_simfukwe/" target="_blank" style="display: flex; align-items: center; gap: 1rem; padding: 0.75rem; color: #334155; text-decoration: none; border-radius: 0.5rem; transition: background 0.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">
                     <i class="fas fa-globe" style="color: #8b5cf6; font-size: 1.25rem; width: 1.5rem; text-align: center;"></i>
@@ -96,14 +103,14 @@
             // Leaflet Map Initialization
             var mapElement = document.getElementById('leaflet-map');
             if (mapElement) {
-                // Coordinates for Chipata, Zambia approximately
-                var map = L.map('leaflet-map').setView([-13.6394, 32.6450], 15);
+                // Coordinates for Chitukuko Road, Lusaka, Zambia approximately
+                var map = L.map('leaflet-map').setView([-15.3875, 28.3228], 14);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19,
                     attribution: '&copy; OpenStreetMap'
                 }).addTo(map);
-                L.marker([-13.6394, 32.6450]).addTo(map)
-                    .bindPopup('<b>St. Paul Chipata Parish</b><br>Main Road, Chipata.').openPopup();
+                L.marker([-15.3875, 28.3228]).addTo(map)
+                    .bindPopup('<b>St. Charles Lwanga Regiment Parish</b><br>Chitukuko Road, Lusaka.').openPopup();
             }
 
             // Chatbot Toggle Logic
@@ -127,9 +134,9 @@
             }
         });
     </script>
-    <script src="assets/js/main.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/main.js"></script>
     <?php if (isset($extraJS)): ?>
-        <script src="assets/js/<?php echo $extraJS; ?>.js"></script>
+        <script src="<?php echo BASE_URL; ?>assets/js/<?php echo $extraJS; ?>.js"></script>
     <?php endif; ?>
 
     <!-- PWA Service Worker Registration -->

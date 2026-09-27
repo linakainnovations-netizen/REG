@@ -12,7 +12,54 @@ use Dompdf\Options;
 
 class PDFGenerator {
     /**
-     * Generate a PDF from HTML and save it
+     * Render HTML to PDF and stream it straight to the browser as a
+     * download. NOTHING is saved on the server.
+     */
+    public static function stream($html, $filename) {
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        while (ob_get_level() > 0) ob_end_clean();
+        $dompdf->stream(preg_replace('/[^a-zA-Z0-9._-]/', '_', $filename), ['Attachment' => true]);
+        exit;
+    }
+
+    /**
+     * Roster table PDF (duties list) — streamed, never stored.
+     */
+    public static function streamRoster($tasks, $title = 'Parish Duty Roster') {
+        $header = self::getBrandedHeaderContent();
+        $rows = '';
+        $i = 1;
+        foreach ($tasks as $t) {
+            $rows .= "<tr><td>" . ($i++) . "</td><td>" . htmlspecialchars($t['assigned_date'] ?? '') . "</td><td>" . htmlspecialchars($t['task_name'] ?? '') . "</td><td>" . htmlspecialchars($t['group_name'] ?? $t['group_id'] ?? '—') . "</td><td>" . htmlspecialchars($t['description'] ?? '') . "</td></tr>";
+        }
+        if ($rows === '') $rows = "<tr><td colspan='5' style='text-align:center;'>No duties scheduled.</td></tr>";
+        $html = "
+        <style>
+            body { font-family: 'Helvetica', sans-serif; padding: 10px; color: #1f2937; }
+            h2 { color: #1e3a8a; text-align: center; margin-top: 0; }
+            table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; font-size: 10pt; }
+            th { background: #f3f4f6; color: #1e3a8a; }
+            .footer { margin-top: 40px; font-size: 9pt; text-align: center; color: #6b7280; border-top: 1px solid #e5e7eb; padding-top: 10px; }
+        </style>
+        $header
+        <h2>" . htmlspecialchars($title) . "</h2>
+        <p style='text-align:center;'>Generated " . date('d M Y') . "</p>
+        <table><thead><tr><th>No.</th><th>Date</th><th>Duty</th><th>Group</th><th>Notes</th></tr></thead><tbody>$rows</tbody></table>
+        <div class='footer'>Official document of St. Charles Lwanga Regiment Parish. One Faith, One Portal.</div>";
+        self::stream($html, str_replace(' ', '_', $title) . '_' . date('Ymd') . '.pdf');
+    }
+
+    /**
+     * Generate a PDF from HTML and save it (legacy — prefer stream()).
      */
     public static function generate($html, $filename, $saveDir = 'dashboard/assets/generated_pdfs/') {
         $options = new Options();
@@ -57,13 +104,13 @@ class PDFGenerator {
                         " . ($base64Logo ? "<img src='$base64Logo' style='height: 80px; width: auto;'>" : "") . "
                     </td>
                     <td style='text-align: center; border: none;'>
-                        <h1 style='margin: 0; color: #1e3a8a; font-size: 24pt; text-transform: uppercase;'>ST. PAUL'S PARISH</h1>
-                        <p style='margin: 5px 0; font-weight: bold; font-size: 11pt;'>CHIPATA COMPOUND, LUSAKA, ZAMBIA</p>
+                        <h1 style='margin: 0; color: #1e3a8a; font-size: 24pt; text-transform: uppercase;'>ST. CHARLES LWANGA PARISH</h1>
+                        <p style='margin: 5px 0; font-weight: bold; font-size: 11pt;'>CHITUKUKO ROAD, REGIMENT, LUSAKA, ZAMBIA</p>
                         <p style='margin: 2px 0; font-size: 9pt; color: #4b5563;'>
-                            P/B RW 174X | Email: stpaulparishchipatacomp@gmail.com
+                            P/B RW 174X | Email: stcharleslwangaregiment@gmail.com
                         </p>
                         <p style='margin: 2px 0; font-size: 9pt; color: #4b5563;'>
-                            Tel/Phone: 0979630513, 0761644044
+                            Tel/Phone: 0975255734
                         </p>
                     </td>
                     <td style='width: 80px; border: none;'></td> <!-- Balancing space -->
@@ -121,7 +168,7 @@ class PDFGenerator {
         </div>
 
         <div class='footer'>
-            This is an official document of St. Paul's Parish Chipata. One Faith, One Portal.
+            This is an official document of St. Charles Lwanga Regiment Parish. One Faith, One Portal.
         </div>";
 
         return self::generate($html, "Thanksgiving_" . str_replace(' ', '_', $groupName) . "_" . date('Ymd') . ".pdf");
@@ -150,11 +197,11 @@ class PDFGenerator {
             <p>Sincerely,</p>
             <br><br>
             <p><strong>Parish Executive Committee</strong></p>
-            <p>St. Paul's Parish Chipata</p>
+            <p>St. Charles Lwanga Regiment Parish</p>
         </div>
 
         <div class='footer'>
-            &copy; " . date('Y') . " St. Paul's Parish Portal. All Rights Reserved.
+            &copy; " . date('Y') . " St. Charles Lwanga Parish Portal. All Rights Reserved.
         </div>";
 
         return self::generate($html, "Official_Notice_" . date('Ymd_His') . ".pdf");

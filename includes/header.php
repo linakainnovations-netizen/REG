@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($pageTitle) ? $pageTitle . ' | St. Paul Chipata Portal' : 'St. Paul Chipata Portal'; ?></title>
+    <title><?php echo isset($pageTitle) ? $pageTitle . ' | St. Charles Lwanga Regiment Portal' : 'St. Charles Lwanga Regiment Portal'; ?></title>
     <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/other/main_logo.png">
     <link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL; ?>assets/images/other/main_logo.png">
     
@@ -13,11 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Global CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/style.css">
     
     <!-- Page Specific CSS -->
     <?php if (isset($extraCSS)): ?>
-        <link rel="stylesheet" href="assets/css/public_pages/<?php echo $extraCSS; ?>.css">
+        <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/public_pages/<?php echo $extraCSS; ?>.css">
     <?php endif; ?>
 
     <!-- Leaflet CSS -->

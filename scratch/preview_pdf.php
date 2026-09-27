@@ -28,7 +28,7 @@ try {
     $pdfPath = PDFGenerator::createOfficialNotice($title, $content);
     echo "SUCCESS: PDF Generated Successfully!\n";
     echo "Location: " . $pdfPath . "\n";
-    echo "Full Physical Path: C:\\xampp\\htdocs\\St._Paul_Chipata_Portal\\" . str_replace('/', '\\', $pdfPath) . "\n";
+    echo "Full Physical Path: C:\\xampp\\htdocs\\St_Charles_Lwanga_Regiment_Portal\\" . str_replace('/', '\\', $pdfPath) . "\n";
 } catch (Exception $e) {
     echo "ERROR: " . $e->getMessage() . "\n";
 }

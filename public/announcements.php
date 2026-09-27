@@ -14,7 +14,7 @@ $announcements = $stmt->fetchAll();
 <section class="hero-premium" style="background: #b45309; color: white; padding: 4rem 0;">
     <div class="container text-center">
         <h1>Stay Informed</h1>
-        <p style="opacity: 0.9;">The official voice of St. Paul Chipata. Verified news from our Parish leadership.</p>
+        <p style="opacity: 0.9;">The official voice of St. Charles Lwanga Regiment. Verified news from our Parish leadership.</p>
     </div>
 </section>
 

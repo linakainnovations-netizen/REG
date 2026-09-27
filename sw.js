@@ -1,13 +1,13 @@
-const CACHE_NAME = 'st-paul-portal-v1';
+const CACHE_NAME = 'st-charles-lwanga-portal-v1';
 const ASSETS_TO_CACHE = [
-  '/St._Paul_Chipata_Portal/',
-  '/St._Paul_Chipata_Portal/home',
-  '/St._Paul_Chipata_Portal/index.php',
-  '/St._Paul_Chipata_Portal/assets/css/style.css',
-  '/St._Paul_Chipata_Portal/assets/js/main.js',
-  '/St._Paul_Chipata_Portal/assets/images/other/main_logo.png',
-  '/St._Paul_Chipata_Portal/assets/images/other/goodmother.jpeg',
-  '/St._Paul_Chipata_Portal/assets/images/other/church.jpeg',
+  '/St_Charles_Lwanga_Regiment_Portal/',
+  '/St_Charles_Lwanga_Regiment_Portal/home',
+  '/St_Charles_Lwanga_Regiment_Portal/index.php',
+  '/St_Charles_Lwanga_Regiment_Portal/assets/css/style.css',
+  '/St_Charles_Lwanga_Regiment_Portal/assets/js/main.js',
+  '/St_Charles_Lwanga_Regiment_Portal/assets/images/other/main_logo.png',
+  '/St_Charles_Lwanga_Regiment_Portal/assets/images/other/homepage.jpg',
+  '/St_Charles_Lwanga_Regiment_Portal/assets/images/other/parish.jpg',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
@@ -43,7 +43,7 @@ self.addEventListener('fetch', (event) => {
       return cachedResponse || fetch(event.request).catch(() => {
         // Fallback for offline (optional: return a custom offline page)
         if (event.request.mode === 'navigate') {
-          return caches.match('/St._Paul_Chipata_Portal/');
+          return caches.match('/St_Charles_Lwanga_Regiment_Portal/');
         }
       });
     })

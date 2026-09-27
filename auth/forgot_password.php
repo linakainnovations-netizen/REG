@@ -21,8 +21,8 @@ include_once 'includes/header.php';
         <div class="auth-card">
             <div class="mb-4">
                 <a href="home" class="logo mb-4" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                    <img src="assets/images/other/main_logo.png" alt="St. Paul Logo" style="height: 40px; width: auto;">
-                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Paul Chipata</span>
+                    <img src="assets/images/other/main_logo.png" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto;">
+                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Charles Lwanga Regiment</span>
                 </a>
                 <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-top: 2rem;">Reset Access</h2>
                 <p style="color: #64748b; font-weight: 500;">Enter your registered email below to receive a reset link.</p>
@@ -45,7 +45,7 @@ include_once 'includes/header.php';
                 
                 <div class="mb-4">
                     <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; color: #475569;">EMAIL ADDRESS</label>
-                    <input type="email" name="email" placeholder="e.g. leader@stpaulchipata.org" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
+                    <input type="email" name="email" placeholder="e.g. leader@stcharleslwangaregiment.org" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; font-weight: 700; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);">

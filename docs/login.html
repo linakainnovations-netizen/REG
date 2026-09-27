@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In | St. Charles Lwanga Regiment Portal (Demo)</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+.auth-page{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+.auth-visual{background:linear-gradient(rgba(30,58,138,.55),rgba(15,23,42,.75)),url('https://images.unsplash.com/photo-1548625149-fc4a29cf7092?w=1200') center/cover;position:relative;color:#fff;padding:4rem}
+.auth-form-container{display:flex;align-items:center;justify-content:center;padding:3rem;background:#f8fafc}
+.auth-card{background:#fff;border-radius:1.2rem;padding:2.5rem;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.12)}
+.inp{width:100%;padding:.85rem;border:1px solid #e2e8f0;border-radius:.5rem;font-size:1rem}
+.err{background:#fee2e2;color:#b91c1c;padding:1rem;border-radius:.5rem;margin-bottom:1.2rem;font-size:.9rem;display:none}
+.quick{margin-top:1.5rem;border-top:1px dashed #e2e8f0;padding-top:1rem}
+.quick button{margin:.25rem .25rem 0 0;padding:.45rem .7rem;border-radius:.5rem;border:1px solid #cbd5e1;background:#f1f5f9;cursor:pointer;font-size:.8rem;font-weight:600}
+@media(max-width:900px){.auth-page{grid-template-columns:1fr}.auth-visual{display:none}}
+</style>
+</head>
+<body>
+<div class="auth-page">
+<div class="auth-visual"><div style="position:absolute;bottom:4rem;left:4rem;z-index:10">
+<h1 style="font-size:3.2rem;line-height:1.1">Faith &<br>Technology</h1>
+<p style="opacity:.9;max-width:400px">Managing our community with transparency, tradition, and digital innovation. (Static demo — same design as live login.)</p>
+</div></div>
+<div class="auth-form-container"><div class="auth-card">
+<a href="index.html" style="display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:1.2rem"><img src="assets/logo.png" style="height:38px"> St. Charles Lwanga Regiment</a>
+<h2 style="font-size:2rem;font-weight:800;margin-top:1.5rem">Welcome Back</h2>
+<p style="color:#64748b">Please enter your credentials to access the portal.</p>
+<div class="err" id="errBox"><i class="fas fa-exclamation-circle"></i> <span id="errMsg"></span></div>
+<form id="loginForm" style="margin-top:1.2rem">
+<label style="font-weight:700;font-size:.85rem;color:#475569">USERNAME OR EMAIL</label>
+<input class="inp" id="login_id" placeholder="e.g. parish.priest" required style="margin:.4rem 0 1rem">
+<label style="font-weight:700;font-size:.85rem;color:#475569">PASSWORD</label>
+<div style="position:relative;margin-top:.4rem"><input type="password" id="password" class="inp" placeholder="Demo password is REGIMENT" required>
+<i class="fas fa-eye" id="togglePw" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);cursor:pointer;color:#94a3b8"></i></div>
+<button class="btn btn-primary" style="width:100%;padding:1rem;margin-top:1.6rem;font-weight:800;border-radius:.6rem">Sign Into Portal <i class="fas fa-arrow-right"></i></button>
+</form>
+<div class="quick"><b>One-click demo (password auto-filled):</b><div id="quickBtns"></div>
+<p style="margin-top:.8rem;color:#64748b;font-size:.85rem">All accounts use password <b>REGIMENT</b>. Back to <a href="index.html" style="color:#1e3a8a;font-weight:700">preview home</a>.</p></div>
+</div></div>
+</div>
+<script src="js/demo-data.js"></script>
+<script>
+document.getElementById('togglePw').onclick=function(){const p=document.getElementById('password');p.type=p.type==='password'?'text':'password';this.classList.toggle('fa-eye-slash');};
+document.getElementById('quickBtns').innerHTML = DEMO_USERS.map(u=>`<button type="button" data-u="${u.username}">${u.username}</button>`).join('');
+document.querySelectorAll('#quickBtns button').forEach(b=>b.onclick=()=>{document.getElementById('login_id').value=b.dataset.u;document.getElementById('password').value='REGIMENT';});
+function fail(m){document.getElementById('errMsg').textContent=m;document.getElementById('errBox').style.display='block';}
+document.getElementById('loginForm').onsubmit=function(e){e.preventDefault();
+const id=document.getElementById('login_id').value.trim().toLowerCase(), pw=document.getElementById('password').value;
+const u=DEMO_USERS.find(x=>x.username.toLowerCase()===id);
+if(!u) return fail('Invalid username. Pick one from the preview home page.');
+if(pw!=='REGIMENT') return fail('Wrong password. Demo password is REGIMENT for all users.');
+localStorage.setItem('demo_session',JSON.stringify({username:u.username,at:Date.now()}));
+location.href='dashboard.html';};
+</script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /St._Paul_Chipata_Portal/
+    RewriteBase /St_Charles_Lwanga_Regiment_Portal/
 
     # Mask dashboard subfolders: block direct folder access but allow assets
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_URI} ^/St._Paul_Chipata_Portal/dashboard/(admin_priest|parish_council|youth_council|lay_groups|choirs|SCC_zonez) [NC]
+    RewriteCond %{REQUEST_URI} ^/St_Charles_Lwanga_Regiment_Portal/dashboard/(admin_priest|parish_council|youth_council|lay_groups|choirs|SCC_zonez) [NC]
     RewriteRule ^(.*)$ dashboard [L,R=301]
 
     # Dashboard sub-page routing (e.g. /dashboard/handover -> /dashboard/index.php?page=handover)

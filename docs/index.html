@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St. Charles Lwanga Regiment | Community Portal (Demo)</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+.hero-demo{background:linear-gradient(rgba(15,23,42,.78),rgba(15,23,42,.78)),url('https://images.unsplash.com/photo-1438032005730-c779502df39b?w=1600') center/cover;color:#fff;padding:5rem 0}
+.demo-badge{display:inline-block;background:#f59e0b;color:#0f172a;font-weight:800;font-size:.75rem;padding:.4rem .9rem;border-radius:2rem;letter-spacing:.08em;margin-bottom:1rem}
+.acct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:1.5rem}
+.acct{background:#fff;border:1px solid #e2e8f0;border-radius:.9rem;padding:1rem 1.1rem}
+.acct b{display:block}.acct small{color:#64748b}
+.acct button{margin-top:.6rem;width:100%;background:#1e3a8a;color:#fff;border:none;border-radius:.5rem;padding:.55rem;cursor:pointer;font-weight:700}
+.acct button:hover{background:#3b82f6}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:.9rem;padding:1rem 1.2rem;margin-top:1.5rem}
+code{background:#0f172a;color:#fbbf24;padding:.15rem .5rem;border-radius:.4rem;font-weight:800}
+</style>
+</head>
+<body>
+<div class="navbar"><div class="container navbar-content">
+<a href="index.html" style="display:flex;align-items:center;gap:.6rem;font-weight:800"><img src="assets/logo.png" style="height:36px"> St. Charles Lwanga Regiment</a>
+<div style="display:flex;gap:.8rem"><a href="login.html" class="btn btn-primary" style="padding:.6rem 1.2rem">Sign In <i class="fas fa-arrow-right"></i></a></div>
+</div></div>
+
+<section class="hero-demo"><div class="container">
+<span class="demo-badge"><i class="fas fa-flask"></i> STATIC PREVIEW FOR CHURCH IT LEAD — GITHUB PAGES</span>
+<h1 style="font-size:3rem;font-weight:800;line-height:1.1">One Faith, One People,<br>One Portal.</h1>
+<p style="opacity:.9;max-width:640px;font-size:1.15rem;margin:1rem 0 2rem">This is a <b>clickable preview</b> of the exact dashboards built in PHP. Log in below to walk through every role. The live PHP + MySQL version runs on XAMPP and will replace this link after your 2–3 day review.</p>
+<div style="display:flex;gap:1rem;flex-wrap:wrap">
+<a href="login.html" class="btn" style="background:#fff;color:#1e3a8a;padding:1rem 2rem;border-radius:.6rem;font-weight:800">Open Login Page</a>
+<a href="#accounts" class="btn" style="background:rgba(255,255,255,.12);color:#fff;padding:1rem 2rem;border-radius:.6rem;font-weight:700;border:1px solid rgba(255,255,255,.35)">See Demo Accounts</a>
+</div></div></section>
+
+<section class="container" id="accounts" style="padding:3rem 1rem">
+<h2>Demo accounts — password for everyone: <code>REGIMENT</code></h2>
+<p class="text-muted">Click any “Login as” button, or go to the login page and type the username + <code>REGIMENT</code>. Each account opens its real role dashboard (Admin/Priest, Parish Council, Youth, Lay Groups, Choirs, SCC, Member).</p>
+<div class="acct-grid" id="acctGrid"></div>
+<div class="note"><b>Note to reviewers:</b> page layouts, menus and buttons match the PHP build 1:1 (same CSS files from <code>assets/css</code> and <code>dashboard/*/assets</code>). Adding / approving / publishing here saves to your browser only (localStorage) — the PHP version saves to MySQL.</div>
+</section>
+
+<footer style="background:#0f172a;color:#94a3b8;padding:2rem 0;text-align:center">St. Charles Lwanga Regiment Portal · Static demo · Full system runs on PHP + MySQL (XAMPP)</footer>
+<script src="js/demo-data.js"></script>
+<script>
+const grid = document.getElementById('acctGrid');
+grid.innerHTML = DEMO_USERS.map(u=>`<div class="acct"><b>${u.full_name}</b><small>${u.username} · ${u.role_name}</small><br><small>${u.group}</small><button onclick="quickLogin('${u.username}')">Login as ${u.username}</button></div>`).join('');
+function quickLogin(u){ localStorage.setItem('demo_session', JSON.stringify({username:u, at:Date.now()})); location.href='dashboard.html'; }
+</script>
+</body>
+</html>

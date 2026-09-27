@@ -1,0 +1,8 @@
+/* Handover Page Styles */
+.handover-container { padding: 1rem; }
+
+.block { display: block; }
+.font-bold { font-weight: 700; }
+.mb-2 { margin-bottom: 0.5rem; }
+
+/* Any other handover specific styles */

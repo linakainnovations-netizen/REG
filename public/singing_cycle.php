@@ -11,7 +11,7 @@ $stmt = $pdo->query("SELECT t.*, g.name as group_name FROM tasks t
 $cycle = $stmt->fetchAll();
 ?>
 
-<section class="hero-premium" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/images/other/choir.webp'); background-size: cover; background-position: center; color: white; padding: 6rem 0;">
+<section class="hero-premium" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/images/other/youths.jpg'); background-size: cover; background-position: center; color: white; padding: 6rem 0;">
     <div class="container text-center">
         <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem;">Liturgy Singing Cycle</h1>
         <p style="opacity: 0.9; font-size: 1.25rem;">Weekly rotation for choirs and group-led singing schedules.</p>

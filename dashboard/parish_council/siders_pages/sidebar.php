@@ -7,10 +7,10 @@
 <aside class="dashboard-sidebar-premium">
     <div class="sidebar-brand">
         <div class="brand-icon" style="background: transparent; box-shadow: none;">
-            <img src="../assets/images/other/main_logo.png" alt="St. Paul Logo" style="height: 48px; width: auto;">
+            <img src="../assets/images/other/main_logo.png" alt="Regiment Logo" style="height: 48px; width: auto;">
         </div>
         <div class="brand-text">
-            <span>St. Paul</span>
+            <span>St. Charles Lwanga</span>
             <small>Parish Council Portal</small>
         </div>
     </div>
@@ -39,6 +39,20 @@
         <a href="announcements" class="nav-item <?php echo $subPath == 'announcements' ? 'active' : ''; ?>">
             <i class="fas fa-megaphone"></i> <span>Announcements</span>
         </a>
+        <a href="live_updates" class="nav-item <?php echo $subPath == 'live_updates' ? 'active' : ''; ?>">
+            <i class="fas fa-bolt"></i> <span>Live Updates</span>
+        </a>
+        <a href="events" class="nav-item <?php echo $subPath == 'events' ? 'active' : ''; ?>">
+            <i class="fas fa-calendar-alt"></i> <span>Events</span>
+        </a>
+        <a href="bulletins" class="nav-item <?php echo $subPath == 'bulletins' ? 'active' : ''; ?>">
+            <i class="fas fa-newspaper"></i> <span>Bulletins</span>
+        </a>
+        <?php if (strpos($_SESSION['role_name'], 'Treasurer') !== false || strpos($_SESSION['role_name'], 'Chairperson') !== false): ?>
+            <a href="giving" class="nav-item <?php echo $subPath == 'giving' ? 'active' : ''; ?>">
+                <i class="fas fa-hand-holding-heart"></i> <span>Giving Verify</span>
+            </a>
+        <?php endif; ?>
         
         <div class="nav-section">Governance</div>
         <a href="roq" class="nav-item <?php echo $subPath == 'roq' ? 'active' : ''; ?>">

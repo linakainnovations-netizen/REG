@@ -24,7 +24,7 @@ $typeLabels = [
 <section class="hero-premium" style="background: var(--primary-color); color: white; padding: 4rem 0;">
     <div class="container text-center">
         <h1>Connect with Your Community</h1>
-        <p style="opacity: 0.9; max-width: 600px; margin: 0 auto;">Discover the heartbeat of St. Paul Chipata. Filter through our ministries and find your place of service and communion.</p>
+        <p style="opacity: 0.9; max-width: 600px; margin: 0 auto;">Discover the heartbeat of St. Charles Lwanga Regiment. Filter through our ministries and find your place of service and communion.</p>
     </div>
 </section>
 

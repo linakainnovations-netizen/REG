@@ -7,10 +7,10 @@
 <aside class="dashboard-sidebar-premium">
     <a href="overview" class="sidebar-brand">
         <div class="brand-icon">
-            <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="St. Paul Logo">
+            <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="Regiment Logo">
         </div>
         <div class="brand-text">
-            <span>St. Paul</span>
+            <span>St. Charles Lwanga</span>
             <small>Priest Portal</small>
         </div>
     </a>
@@ -29,13 +29,19 @@
         <a href="announcements" class="nav-item <?php echo $subPath == 'announcements' ? 'active' : ''; ?>">
             <i class="fas fa-megaphone"></i> <span>Announcements</span>
         </a>
-        
-        <div class="nav-section">Finance & ROQ</div>
-        <a href="finance" class="nav-item <?php echo $subPath == 'finance' ? 'active' : ''; ?>">
-            <i class="fas fa-chart-pie"></i> <span>Collections</span>
+        <a href="bulletins" class="nav-item <?php echo $subPath == 'bulletins' ? 'active' : ''; ?>">
+            <i class="fas fa-newspaper"></i> <span>Bulletins</span>
         </a>
-        <a href="roq" class="nav-item <?php echo $subPath == 'roq' ? 'active' : ''; ?>">
-            <i class="fas fa-file-invoice-dollar"></i> <span>Procurement</span>
+        <!-- Collections, Giving verification & Procurement now live
+             with the Parish Council (Treasurer/Chairperson). -->
+        <a href="events" class="nav-item <?php echo $subPath == 'events' ? 'active' : ''; ?>">
+            <i class="fas fa-calendar-alt"></i> <span>Events</span>
+        </a>
+        <a href="live_updates" class="nav-item <?php echo $subPath == 'live_updates' ? 'active' : ''; ?>">
+            <i class="fas fa-bolt"></i> <span>Live Updates</span>
+        </a>
+        <a href="ministries" class="nav-item <?php echo $subPath == 'ministries' ? 'active' : ''; ?>">
+            <i class="fas fa-hands-helping"></i> <span>Ministries</span>
         </a>
 
         <div class="nav-section">System</div>

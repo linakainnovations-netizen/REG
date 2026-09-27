@@ -10,8 +10,20 @@ $error = false;
 
 // Handle Adding Roster Task
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_roster'])) {
-    $task_name = trim($_POST['task_name']);
-    $group_id = $_POST['group_id'];
+    $duty_type = $_POST['duty_type'] ?? 'other';
+    $detail = trim($_POST['task_detail'] ?? '');
+    $prefixes = [
+        'sweeping' => 'Sweeping',
+        'reading' => 'Sunday Reading',
+        'mass' => 'Mass Program',
+        'singing' => 'Sunday Singing',
+        'offertory' => 'Sunday Offertory',
+        'other' => '',
+    ];
+    $prefix = $prefixes[$duty_type] ?? '';
+    $task_name = trim($prefix . ($prefix && $detail ? ' — ' . $detail : $detail));
+    if ($task_name === '') $task_name = trim($_POST['task_name'] ?? '');
+    $group_id = $_POST['group_id'] ?: null;
     $assigned_date = $_POST['assigned_date'];
     $description = trim($_POST['description']);
 
@@ -24,6 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_roster'])) {
             $error = "Error scheduling task: " . $e->getMessage();
         }
     }
+}
+if (isset($_GET['delete'])) {
+    $pdo->prepare("DELETE FROM tasks WHERE id = ?")->execute([intval($_GET['delete'])]);
+    header("Location: secretary_rosters"); exit();
+}
+if (isset($_GET['done'])) {
+    $pdo->prepare("UPDATE tasks SET status='completed' WHERE id = ?")->execute([intval($_GET['done'])]);
+    header("Location: secretary_rosters"); exit();
 }
 
 // Fetch Groups for Dropdown
@@ -59,12 +79,12 @@ $roster = $stmt->fetchAll();
                         <th style="padding: 1rem; text-align: left;">Assigned Date</th>
                         <th style="padding: 1rem; text-align: left;">Duty / Task Name</th>
                         <th style="padding: 1rem; text-align: left;">Assigned Group</th>
-                        <th style="padding: 1rem; text-align: right;">Status</th>
+                        <th style="padding: 1rem; text-align: right;">Status / Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($roster as $r): ?>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
+                        <tr style="border-bottom: 1px solid var(--border-color); <?php echo ($r['status'] ?? '') === 'completed' ? 'opacity: 0.6;' : ''; ?>">
                             <td style="padding: 1rem; font-weight: 700; color: var(--primary-color);">
                                 <?php echo date('D, M j, Y', strtotime($r['assigned_date'])); ?>
                             </td>
@@ -74,8 +94,13 @@ $roster = $stmt->fetchAll();
                                     <?php echo htmlspecialchars($r['group_name'] ?? 'Not Assigned'); ?>
                                 </span>
                             </td>
-                            <td style="padding: 1rem; text-align: right;">
-                                <span style="color: #3b82f6; font-size: 0.85rem;"><i class="fas fa-clock mr-1"></i> Upcoming</span>
+                            <td style="padding: 1rem; text-align: right; white-space: nowrap;">
+                                <?php if (($r['status'] ?? 'scheduled') === 'completed'): ?>
+                                    <span style="color: #16a34a; font-size: 0.85rem;"><i class="fas fa-check-circle mr-1"></i> Done</span>
+                                <?php else: ?>
+                                    <a href="secretary_rosters?done=<?php echo $r['id']; ?>" class="btn btn-sm btn-outline" style="padding: 0.3rem 0.7rem;" title="Mark completed"><i class="fas fa-check"></i></a>
+                                <?php endif; ?>
+                                <a href="secretary_rosters?delete=<?php echo $r['id']; ?>" class="btn btn-sm btn-outline" style="padding: 0.3rem 0.7rem;" title="Delete" onclick="return confirm('Delete this duty?')"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -89,10 +114,24 @@ $roster = $stmt->fetchAll();
 <div id="addRosterModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; padding: 1.5rem;">
     <div class="card" style="max-width: 500px; width: 100%;">
         <h2 class="mb-4">Schedule Parish Duty</h2>
+        <p class="text-muted mb-4" style="font-size: 0.85rem;">Pick a duty type — it files the entry under Sweeping, Sunday Reading or Mass on the public Rosters page automatically.</p>
         <form method="POST">
-            <div class="mb-4">
-                <label class="block font-bold mb-2">Duty Name</label>
-                <input type="text" name="task_name" class="form-control" placeholder="e.g. Sunday Morning Singing" style="width: 100%;" required>
+            <div class="grid grid-cols-2">
+                <div class="mb-4">
+                    <label class="block font-bold mb-2">Duty Type</label>
+                    <select name="duty_type" class="form-control" style="width: 100%;">
+                        <option value="sweeping">Sweeping Rota</option>
+                        <option value="reading">Sunday Reading Cycle</option>
+                        <option value="mass">Mass Program</option>
+                        <option value="singing">Sunday Singing</option>
+                        <option value="offertory">Sunday Offertory</option>
+                        <option value="other">Other / Custom</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label class="block font-bold mb-2">Detail (group / readers)</label>
+                    <input type="text" name="task_detail" class="form-control" placeholder="e.g. St. Anne Zone, or Mwila + Chanda" style="width: 100%;">
+                </div>
             </div>
             <div class="grid grid-cols-2">
                 <div class="mb-4">

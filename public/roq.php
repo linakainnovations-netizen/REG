@@ -22,8 +22,8 @@ $roqs = $stmt->fetchAll();
             <!-- Official Header -->
             <div class="notice-header text-center mb-5">
                 <img src="<?php echo BASE_URL; ?>assets/images/other/main_logo.png" alt="Parish Logo" style="height: 100px; margin-bottom: 1.5rem;">
-                <h1 style="font-family: 'Times New Roman', Times, serif; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">St. Paul's Parish - Chipata</h1>
-                <p class="mb-0 text-muted" style="text-transform: uppercase; font-size: 0.9rem; font-weight: 700;">Catholic Diocese of Chipata, Zambia</p>
+                <h1 style="font-family: 'Times New Roman', Times, serif; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">St. Charles Lwanga Parish - Regiment</h1>
+                <p class="mb-0 text-muted" style="text-transform: uppercase; font-size: 0.9rem; font-weight: 700;">Catholic Archdiocese of Lusaka, Zambia</p>
                 <div style="width: 100%; height: 3px; background: #1a202c; margin-top: 1.5rem; margin-bottom: 3rem;"></div>
             </div>
 
@@ -71,12 +71,12 @@ $roqs = $stmt->fetchAll();
             <!-- Footer Text -->
             <div class="mt-5 pt-5 text-center text-muted" style="font-size: 0.85rem; border-top: 1px dashed #cbd5e1;">
                 <p>One Faith, One People, One Portal.</p>
-                <p class="mb-0">&copy; <?php echo date('Y'); ?> St. Paul's Parish Portal. All procurement follows administrative guidelines.</p>
+                <p class="mb-0">&copy; <?php echo date('Y'); ?> St. Charles Lwanga Parish Portal. All procurement follows administrative guidelines.</p>
             </div>
         </div>
 
         <div class="notice-meta text-center text-muted" style="font-size: 0.9rem;">
-            <p><i class="fas fa-lock mr-2"></i> This is an official notice generated through the St. Paul Parish Digital Portal.</p>
+            <p><i class="fas fa-lock mr-2"></i> This is an official notice generated through the St. Charles Lwanga Parish Digital Portal.</p>
         </div>
     </div>
 </div>

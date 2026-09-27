@@ -23,17 +23,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_invitation'])) {
 
         // Trigger Email
         require_once __DIR__ . '/../../../backend/mail_manager.php';
-        $subject = "Parish Leadership Invitation - St. Paul Chipata";
+        $subject = "Parish Leadership Invitation - St. Charles Lwanga Regiment";
         $body = "
             <div style='font-family: sans-serif; padding: 20px; border: 1px solid #e2e8f0; border-radius: 10px;'>
                 <h2 style='color: #1e3a8a;'>You are Invited!</h2>
-                <p>You have been formally invited to join the St. Paul Chipata leadership portal.</p>
+                <p>You have been formally invited to join the St. Charles Lwanga Regiment leadership portal.</p>
                 <div style='background: #f1f5f9; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;'>
                     <p style='font-size: 0.875rem; color: #64748b; margin-bottom: 5px;'>YOUR ACTIVATION CODE</p>
                     <h1 style='font-size: 2.5rem; letter-spacing: 10px; margin: 0; color: #1e3a8a;'>$code</h1>
                 </div>
                 <p>Click the link below and enter your code to create your administrator account:</p>
-                <a href='http://localhost/St._Paul_Chipata_Portal/register' style='display: inline-block; background: #1e3a8a; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;'>Activate Account</a>
+                <a href='http://localhost/St_Charles_Lwanga_Regiment_Portal/register' style='display: inline-block; background: #1e3a8a; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;'>Activate Account</a>
                 <p style='font-size: 0.8rem; color: #94a3b8; margin-top: 20px;'>This code expires in 48 hours.</p>
             </div>
         ";

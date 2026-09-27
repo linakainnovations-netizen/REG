@@ -1,28 +1,41 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Mobile navigation toggle
+    // Mobile navigation: bottom sheet
     var mobileToggle = document.querySelector('.mobile-toggle');
     var navLinks = document.querySelector('.nav-links');
-    
+    var navBackdrop = document.getElementById('nav-backdrop');
+    var sheetClose = document.getElementById('sheet-close');
+
+    function openMenu() {
+        if (!navLinks) return;
+        navLinks.classList.add('open');
+        if (navBackdrop) navBackdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        if (mobileToggle) mobileToggle.innerHTML = '<i class="fas fa-times"></i>';
+    }
+
+    function closeMenu() {
+        if (!navLinks) return;
+        navLinks.classList.remove('open');
+        if (navBackdrop) navBackdrop.classList.remove('open');
+        document.body.style.overflow = '';
+        if (mobileToggle) mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    }
+
     if (mobileToggle && navLinks) {
         mobileToggle.addEventListener('click', function() {
-            navLinks.classList.toggle('show');
-            // Prevent body scroll when menu is open
-            if (navLinks.classList.contains('show')) {
-                document.body.style.overflow = 'hidden';
-                mobileToggle.innerHTML = '<i class="fas fa-times"></i>'; // Change icon to close
+            if (navLinks.classList.contains('open')) {
+                closeMenu();
             } else {
-                document.body.style.overflow = '';
-                mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
+                openMenu();
             }
         });
 
+        if (navBackdrop) navBackdrop.addEventListener('click', closeMenu);
+        if (sheetClose) sheetClose.addEventListener('click', closeMenu);
+
         // Close menu when clicking a link
-        navLinks.querySelectorAll('.nav-link:not(#ministries-trigger):not(#finance-trigger)').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('show');
-                document.body.style.overflow = '';
-                mobileToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            });
+        navLinks.querySelectorAll('.nav-link:not(#ministries-trigger):not(#finance-trigger), .dropdown-content a, .btn').forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
 
         // Mobile Dropdown Toggles
@@ -59,11 +72,14 @@ document.addEventListener("DOMContentLoaded", function() {
             innerContainer.style.zIndex = '2';
         }
 
-        // Selected sliding images
+        // Selected sliding images (must exist in assets/images/other)
+        var baseUrl = document.querySelector('link[rel="manifest"]')
+            ? document.querySelector('link[rel="manifest"]').href.replace(/manifest\.json$/, '')
+            : './';
         var slideImages = [
-            'assets/images/other/WhatsApp Image 2026-04-11 at 8.14.45 AM.jpeg',
-            'assets/images/other/WhatsApp Image 2026-04-11 at 8.14.52 AM.jpeg',
-            'assets/images/other/WhatsApp Image 2026-04-11 at 8.14.53 AM.jpeg'
+            baseUrl + 'assets/images/other/church.jpeg',
+            baseUrl + 'assets/images/other/mass.jpeg',
+            baseUrl + 'assets/images/other/homepage.jpg'
         ];
 
         var sliderWrapper = document.createElement('div');
@@ -176,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     window.addEventListener('appinstalled', (evt) => {
-        console.log('St. Paul Portal was installed');
+        console.log('St. Charles Lwanga Regiment Portal was installed');
         installBtn.style.display = 'none';
     });
 });

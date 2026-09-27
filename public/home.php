@@ -1,17 +1,21 @@
 <?php
-$pageTitle = "St. Paul Chipata | Community Portal";
+$pageTitle = "St. Charles Lwanga Regiment | Community Portal";
 include_once 'includes/header.php';
+$quickUpdates = [];
+try {
+    $quickUpdates = $pdo->query("SELECT message, created_at FROM live_updates WHERE status = 'published' AND (expires_at IS NULL OR expires_at > NOW()) ORDER BY is_pinned DESC, created_at DESC LIMIT 2")->fetchAll();
+} catch (Throwable $e) { $quickUpdates = []; }
 ?>
 
 <!-- Hero Section with Premium Slider -->
 <section class="hero-premium" style="height: 600px; position: relative; overflow: hidden; color: white;">
     <!-- Animated Slides -->
     <div class="hero-slider-wrapper">
-        <div class="hero-slide" style="background-image: url('assets/images/other/church.jpeg');"></div>
-        <div class="hero-slide" style="background-image: url('assets/images/other/group.jpeg');"></div>
-        <div class="hero-slide" style="background-image: url('assets/images/other/fada.jpeg');"></div>
-        <div class="hero-slide" style="background-image: url('assets/images/other/choir2.jpeg');"></div>
-        <div class="hero-slide" style="background-image: url('assets/images/other/fada2.jpeg');"></div>
+        <div class="hero-slide" style="background-image: url('assets/images/other/homepage.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('assets/images/other/home.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('assets/images/other/home_9.jpg');"></div>
+        <div class="hero-slide" style="background-image: url('assets/images/other/home4.jpeg');"></div>
+        <div class="hero-slide" style="background-image: url('assets/images/other/parish.jpg');"></div>
         <!-- Fixed overlay for text contrast -->
         <div style="position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)); z-index: 2;"></div>
     </div>
@@ -33,6 +37,14 @@ include_once 'includes/header.php';
             <div style="display: flex; justify-content: flex-end;">
                 <div class="hero-card" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 2.5rem; border-radius: 1.5rem; border: 1px solid rgba(255,255,255,0.2); width: 100%; max-width: 400px;">
                     <h3 class="mb-4" style="color: white; font-weight: 700;">Quick Announcements</h3>
+                    <?php if (!empty($quickUpdates)): foreach ($quickUpdates as $q): ?>
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
+                        <p style="font-size: 0.875rem; opacity: 0.8;"><?php echo date('M j, H:i', strtotime($q['created_at'])); ?></p>
+                        <p style="font-weight: 600;"><?php echo htmlspecialchars(mb_substr($q['message'], 0, 90)); ?></p>
+                    </div>
+                    <?php endforeach; ?>
+                    <a href="live-updates" style="color: white; font-weight: 700; font-size: 0.875rem;">View all live updates →</a>
+                    <?php else: ?>
                     <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.1);">
                         <p style="font-size: 0.875rem; opacity: 0.8;">Today</p>
                         <p style="font-weight: 600;">Liturgy Schedule Update</p>
@@ -41,12 +53,34 @@ include_once 'includes/header.php';
                         <p style="font-size: 0.875rem; opacity: 0.8;">Tomorrow</p>
                         <p style="font-weight: 600;">Youth Choir Rehearsal</p>
                     </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
     <!-- Decorative Circle -->
     <div style="position: absolute; width: 600px; height: 600px; background: rgba(255,255,255,0.05); border-radius: 50%; top: -100px; right: -200px; z-index: 1;"></div>
+</section>
+
+<!-- Live / Giving / Bulletins quick banner -->
+<section class="container mt-4">
+    <div class="grid grid-cols-3" style="gap: 1.5rem;">
+        <a href="media" class="card" style="padding: 1.5rem; background: #0f172a; color: white; text-decoration: none; border: none;">
+            <span class="badge" style="background: #ef4444; color: white; padding: 0.3rem 0.8rem; font-size: 0.75rem;"><i class="fas fa-circle mr-2"></i>LIVE</span>
+            <h3 class="mt-4" style="color: white;">Watch Mass Live</h3>
+            <p style="opacity: 0.8; font-size: 0.9rem;">Facebook & YouTube streams, Mass times and replays.</p>
+        </a>
+        <a href="giving" class="card" style="padding: 1.5rem; background: #ecfdf5; text-decoration: none; border: 1px solid #a7f3d0;">
+            <i class="fas fa-hand-holding-heart fa-2x" style="color: #059669;"></i>
+            <h3 class="mt-4">Give via MoMo</h3>
+            <p class="text-muted" style="font-size: 0.9rem;">MTN / Airtel to 0975255734, submit Txn ID.</p>
+        </a>
+        <a href="bulletins" class="card" style="padding: 1.5rem; background: #f5f3ff; text-decoration: none; border: 1px solid #ddd6fe;">
+            <i class="fas fa-newspaper fa-2x" style="color: #7c3aed;"></i>
+            <h3 class="mt-4">Sunday Bulletin</h3>
+            <p class="text-muted" style="font-size: 0.9rem;">Download this week's readings & notices.</p>
+        </a>
+    </div>
 </section>
 
 <!-- Stats Section -->
@@ -103,21 +137,21 @@ include_once 'includes/header.php';
             <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 3rem;">Our Vibrant Community</h2>
             <div class="grid grid-cols-3">
                 <div class="card" style="padding: 0; overflow: hidden; border: none; box-shadow: var(--shadow-md);">
-                    <img src="assets/images/other/slo.jpeg" style="width: 100%; height: 250px; object-fit: cover;">
+                    <img src="assets/images/other/parish.jpg" style="width: 100%; height: 250px; object-fit: cover;">
                     <div class="p-4 text-left">
                         <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">Parish Facilities</h4>
                         <p class="text-muted" style="font-size: 0.9rem;">Modern spaces dedicated to prayer, liturgical formation, and community gatherings.</p>
                     </div>
                 </div>
                 <div class="card" style="padding: 0; overflow: hidden; border: none; box-shadow: var(--shadow-md);">
-                    <img src="assets/images/other/mudala.jpeg" style="width: 100%; height: 250px; object-fit: cover;">
+                    <img src="assets/images/other/parish_council.jpg" style="width: 100%; height: 250px; object-fit: cover;">
                     <div class="p-4 text-left">
                         <h4 style="margin-bottom: 0.5rem; color: var(--secondary-color);">Lay Movements</h4>
                         <p class="text-muted" style="font-size: 0.9rem;">Experience unity and fellowship within our various Lay Groups and SCC ministries.</p>
                     </div>
                 </div>
                 <div class="card" style="padding: 0; overflow: hidden; border: none; box-shadow: var(--shadow-md);">
-                    <img src="assets/images/other/deacon.jpeg" style="width: 100%; height: 250px; object-fit: cover; object-position: top;">
+                    <img src="assets/images/other/youths.jpg" style="width: 100%; height: 250px; object-fit: cover; object-position: top;">
                     <div class="p-4 text-left">
                         <h4 style="margin-bottom: 0.5rem; color: var(--accent-color);">Liturgy & Prayer</h4>
                         <p class="text-muted" style="font-size: 0.9rem;">Dedication to spiritual growth through daily mass and weekly liturgical devotion.</p>
@@ -134,14 +168,14 @@ include_once 'includes/header.php';
         </div>
         <div class="grid grid-cols-2" style="gap: 3rem;">
             <div class="flex" style="gap: 1.5rem; align-items: center;">
-                <img src="assets/images/other/user1.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 4px solid white; box-shadow: var(--shadow-md);">
+                <div style="width: 80px; height: 80px; min-width: 80px; border-radius: 50%; border: 4px solid white; box-shadow: var(--shadow-md); background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">M</div>
                 <div>
                     <p style="font-style: italic; color: var(--text-muted); line-height: 1.6;">"The portal has made it so easy to stay updated with our SCC sweeping roster. Transparency in our finance reports is what we truly needed!"</p>
                     <p class="mt-2" style="font-weight: 700; color: var(--primary-color);">Mary Zulu - SCC Chairperson</p>
                 </div>
             </div>
             <div class="flex" style="gap: 1.5rem; align-items: center;">
-                <img src="assets/images/other/user2.webp" style="width: 80px; height: 80px; border-radius: 50%; border: 4px solid white; box-shadow: var(--shadow-md);">
+                <div style="width: 80px; height: 80px; min-width: 80px; border-radius: 50%; border: 4px solid white; box-shadow: var(--shadow-md); background: var(--secondary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">J</div>
                 <div>
                     <p style="font-style: italic; color: var(--text-muted); line-height: 1.6;">"I love being able to see when our Choir is next in the Singing Cycle. The automated notifications keep us connected wherever we are."</p>
                     <p class="mt-2" style="font-weight: 700; color: var(--primary-color);">Joseph Phiri - Choir Member</p>
@@ -152,15 +186,15 @@ include_once 'includes/header.php';
 
     <!-- Map & Contact Section -->
     <section style="margin-top: 4rem; position: relative; height: 450px; border-radius: 2rem; overflow: hidden; box-shadow: var(--shadow-lg);">
-        <img src="assets/images/other/contact_us.webp" style="width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 1;">
+        <img src="assets/images/other/footer.jpg" style="width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 1;">
         <div style="position: absolute; inset: 0; background: linear-gradient(to right, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 100%); z-index: 2;"></div>
         <div class="container" style="position: relative; z-index: 10; height: 100%; display: flex; align-items: center;">
             <div style="max-width: 500px; color: white;">
                 <h2 style="font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem;">Always Here <br>for Our People.</h2>
                 <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <p class="flex" style="align-items: center; gap: 1rem;"><i class="fas fa-envelope text-primary"></i> office@stpaulchipata.org</p>
-                    <p class="flex" style="align-items: center; gap: 1rem;"><i class="fas fa-phone text-primary"></i> +260 979 630 513</p>
-                    <p class="flex" style="align-items: center; gap: 1rem;"><i class="fas fa-map-marker-alt text-primary"></i> Main Road, Chipata, Zambia</p>
+                    <p class="flex" style="align-items: center; gap: 1rem;"><i class="fas fa-envelope text-primary"></i> office@stcharleslwangaregiment.org</p>
+                    <p class="flex" style="align-items: center; gap: 1rem;"><i class="fas fa-phone text-primary"></i> +260 975 255 734</p>
+                    <p class="flex" style="align-items: center; gap: 1rem;"><i class="fas fa-map-marker-alt text-primary"></i> Chitukuko Road, Lusaka, Zambia</p>
                 </div>
                 <a href="event_request" class="btn btn-primary mt-4" style="padding: 1rem 2.5rem; border-radius: 3rem;">Inquire About Sacraments</a>
             </div>

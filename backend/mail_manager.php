@@ -23,13 +23,13 @@ class MailManager {
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com'; // Use your SMTP server
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'portal@stpaulchipata.org'; // SMTP username
+            $mail->Username   = 'office@stcharleslwangaregiment.org'; // SMTP username
             $mail->Password   = 'your-password';           // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
             // Recipients
-            $mail->setFrom('portal@stpaulchipata.org', 'St. Paul Chipata Portal');
+            $mail->setFrom('office@stcharleslwangaregiment.org', 'St. Charles Lwanga Regiment Portal');
             $mail->addAddress($to);
 
             // Attachments
@@ -56,7 +56,7 @@ class MailManager {
      * Email for Leader Approval (Public Event)
      */
     public static function sendApprovalRequest($leaderEmail, $eventTitle, $token) {
-        $approveLink = "http://" . $_SERVER['HTTP_HOST'] . "/St._Paul_Chipata_Portal/verify-event?token=" . $token;
+        $approveLink = "http://" . $_SERVER['HTTP_HOST'] . "/St_Charles_Lwanga_Regiment_Portal/verify-event?token=" . $token;
         
         $body = "
         <div style='font-family: sans-serif; padding: 20px; border: 1px solid #e5e7eb; border-radius: 10px;'>
