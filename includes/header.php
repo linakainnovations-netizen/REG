@@ -29,7 +29,7 @@
     <!-- PWA Support -->
     <link rel="manifest" href="<?php echo BASE_URL; ?>manifest.json">
     <meta name="theme-color" content="#0f172a">
-    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png">
+    <link rel="apple-touch-icon" href="<?php echo BASE_URL; ?>assets\images\logo\original_logo.jpeg">
 </head>
 <body>
     <?php include_once 'navbar.php'; ?>

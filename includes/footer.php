@@ -6,7 +6,7 @@
                 <!-- About Column -->
                 <div>
                     <h3 style="color: white; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
-                        <img src="<?php echo BASE_URL; ?>assets/images/other/saint_logo.png" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto; object-fit: contain;"> St. Charles Lwanga Regiment
+                        <img src="<?php echo BASE_URL; ?>assets\images\logo\original_logo.jpeg" alt="St. Charles Lwanga Logo" style="height: 40px; width: auto; object-fit: contain;"> St. Charles Lwanga Regiment
                     </h3>
                     <img src="<?php echo BASE_URL; ?>assets/images/other/mass.jpeg" alt="Holy Mass at St. Charles Lwanga Regiment Parish" style="width: 100%; height: 140px; object-fit: cover; border-radius: 0.75rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.15);">
                     <p style="color: #94a3b8; line-height: 1.6; font-size: 0.95rem;">

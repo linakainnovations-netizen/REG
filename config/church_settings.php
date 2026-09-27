@@ -14,7 +14,7 @@ define('PARISH_PHONE', env('PARISH_PHONE', '0975255734'));
 define('PARISH_PHONE_INTL', env('PARISH_PHONE_INTL', '+260975255734'));
 
 // Live stream sources (Option 2: embed FB + YT, no video stored in DB)
-define('FB_PAGE_URL', env('FB_PAGE_URL', 'https://web.facebook.com/groups/539879469476464/events'));
+define('FB_PAGE_URL', env('FB_PAGE_URL', 'https://www.facebook.com/profile.php?id=100067832423652'));
 define('YT_CHANNEL_URL', env('YT_CHANNEL_URL', 'https://www.youtube.com/'));
 define('YT_CHANNEL_ID', env('YT_CHANNEL_ID', ''));
 
