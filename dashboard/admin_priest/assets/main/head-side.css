@@ -192,6 +192,16 @@
     width: auto;
 }
 
+/* Crest logo: circular badge crops cleanly on the dark sidebar */
+.dashboard-sidebar-premium .brand-icon img {
+    height: 54px;
+    width: 54px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: #fff;
+}
+
 .brand-text span {
     display: block;
     font-size: 1.2rem;
