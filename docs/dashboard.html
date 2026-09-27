@@ -25,6 +25,22 @@
 .sidebar-switch{background:#0f172a;color:#cbd5e1;border-radius:.6rem;padding:.7rem;margin:.4rem 0;font-size:.8rem}
 .sidebar-switch select{width:100%;margin-top:.4rem;padding:.45rem;border-radius:.4rem}
 @media(max-width:900px){.dashboard-sidebar-premium{display:none}.dashboard-sidebar-premium.open{display:flex;position:fixed;z-index:99;height:100vh}}
+/* ---- Mobile patch: all roles, all phones (complements real head-side.css/main.css) ---- */
+@media(max-width:1024px){
+.dashboard-sidebar-premium.open{transform:translateX(0)!important;z-index:10002;box-shadow:20px 0 60px rgba(0,0,0,.35)}
+.dashboard-main{width:100%}
+}
+@media(max-width:768px){
+form.grid{grid-template-columns:1fr!important}
+.stats-grid,.charts-container{grid-template-columns:1fr!important}
+.table-responsive{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-responsive table{min-width:640px}
+.content-inner .card{border-radius:.8rem}
+#dashHeader .header-search{display:none}
+.overview-card .btn,.finance-container .btn-group{display:flex;flex-wrap:wrap;gap:.5rem}
+.overview-card .btn a,.finance-container .btn-group .btn{flex:1 1 auto;text-align:center}
+h1{font-size:1.4rem!important}
+}
 </style>
 </head>
 <body class="dashboard-body">

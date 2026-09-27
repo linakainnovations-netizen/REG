@@ -101,7 +101,7 @@ function renderHeader(page){
   <div class="breadcrumb"><span class="text-muted">Dashboard</span><i class="fas fa-chevron-right mx-2" style="font-size:.7rem"></i><span class="breadcrumb-active">${esc(title)}</span></div></div>
   <div class="header-right"><div class="header-search"><i class="fas fa-search"></i><input id="globalSearch" placeholder="Search records... (filters tables)"></div>
   <a href="#/profile" style="text-decoration:none;color:inherit"><div class="user-profile-widget"><div class="user-info text-right"><p class="name">${esc(me.full_name)}</p><p class="role">${esc(me.role_name)}</p></div><div class="user-avatar-premium">${esc(me.full_name[0])}</div></div></a></div>`;
-  $("#menuBtn").onclick=()=>$("#sidebar").classList.toggle("open");
+  $("#menuBtn").onclick=()=>{const sb=$("#sidebar"); sb.classList.toggle("open"); sb.classList.toggle("active");};
   const gs=$("#globalSearch"); if(gs) gs.oninput=e=>{ const q=e.target.value.toLowerCase(); document.querySelectorAll("#pageRoot table tbody tr").forEach(tr=>{ tr.style.display = tr.textContent.toLowerCase().includes(q)?"":"none"; }); };
 }
 

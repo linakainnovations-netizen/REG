@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | St. Charles Lwanga Regiment Portal</title>
+    <title>Community Pledges | St. Charles Lwanga Regiment Portal</title>
     <link rel="icon" type="image/png" href="assets.html/images/other/main_logo.png">
     <link rel="shortcut icon" type="image/png" href="assets.html/images/other/main_logo.png">
     
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="dropdown">
-                    <a href="#" id="finance-trigger" class="nav-link ">
+                    <a href="#" id="finance-trigger" class="nav-link active">
                         <i class="m-ico fas fa-chart-pie"></i>Finance <i class="fas fa-chevron-down chev" style="font-size: 0.7rem;"></i>
                     </a>
                     <div class="dropdown-content">
@@ -95,7 +95,7 @@
             </div>
 
             <div class="menu-account">
-                                    <a href="login.html" class="nav-link active"><i class="m-ico fas fa-sign-in-alt"></i>Login</a>
+                                    <a href="login.html" class="nav-link "><i class="m-ico fas fa-sign-in-alt"></i>Login</a>
                     <a href="join.html" class="btn btn-primary">Join Us</a>
                             </div>
         </div>
@@ -167,74 +167,53 @@
                 </a>
             </div>
         
-<div class="auth-page">
-    <!-- Visual Half -->
-    <div class="auth-visual" style="background-image: url('assets.html/images/other/login.jpg');">
-        <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10; color: white;">
-            <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Faith & <br>Technology</h1>
-            <p style="font-size: 1.25rem; opacity: 0.9; max-width: 400px;">Managing our community with transparency, tradition, and digital innovation.</p>
+<section class="hero-premium" style="background: var(--accent-color); color: white; padding: 4rem 0;">
+    <div class="container text-center">
+        <h1>Building Our Future Together</h1>
+        <p style="opacity: 0.9;">Track our collective progress towards Parish goals and community projects.</p>
+    </div>
+</section>
+
+<div class="container mt-4 mb-4">
+    <!-- Progress Tracking -->
+    <div class="card mb-4" style="border: none; box-shadow: var(--shadow-lg); padding: 3rem;">
+        <div class="text-center mb-4">
+            <h2 style="font-weight: 800; color: var(--text-main);">Current Goal Progress</h2>
+            <p class="text-muted">Yearly Development Fund 2026</p>
+        </div>
+        
+        <div style="background: #e5e7eb; height: 30px; border-radius: 15px; overflow: hidden; margin: 2rem 0; position: relative;">
+            <div style="background: var(--accent-color); width: 0%; height: 100%; transition: width 1s ease-in-out;"></div>
+            <span style="position: absolute; right: 10px; top: 3px; font-weight: 800; color: var(--text-main);">0%</span>
+        </div>
+
+        <div class="grid grid-cols-3 text-center">
+            <div>
+                <p class="text-muted mb-1">Total Pledged</p>
+                <h3 style="color: var(--primary-color);">K 0.00</h3>
+            </div>
+            <div>
+                <p class="text-muted mb-1">Total Collected</p>
+                <h3 style="color: var(--accent-color);">K 0.00</h3>
+            </div>
+            <div>
+                <p class="text-muted mb-1">Active Pledgers</p>
+                <h3 style="color: var(--secondary-color);">0 Members</h3>
+            </div>
         </div>
     </div>
 
-    <!-- Form Half -->
-    <div class="auth-form-container">
-        <div class="auth-card">
-            <div class="mb-4">
-                <a href="../home" class="logo mb-4" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                    <img src="assets/images/other/main_logo.png" alt="Regiment Logo" style="height: 40px; width: auto;">
-                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Charles Lwanga Regiment</span>
-                </a>
-                <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-top: 2rem;">Welcome Back</h2>
-                <p style="color: #64748b; font-weight: 500;">Please enter your credentials to access the portal.</p>
+    <!-- Recent Recognition (Autonomous) -->
+    <div class="page-header mt-4">
+        <h2>Recent Contributions</h2>
+        <p class="text-muted">Celebrating our members' commitment (Autonomous Display).</p>
+    </div>
+    
+    <div class="grid grid-cols-3">
             </div>
 
-            
-            <form action="#" data-demo-login method="POST">
-                <input type="hidden" name="action" value="login">
-                
-                <div class="mb-4">
-                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; color: #475569;">USERNAME OR EMAIL</label>
-                    <input type="text" name="login_id" placeholder="e.g. jdoe24" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
-                </div>
-
-                <div class="mb-4">
-                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; color: #475569;">PASSWORD</label>
-                    <div style="position: relative;">
-                        <input type="password" name="password" id="passwordInput" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
-                        <i class="fas fa-eye" id="togglePassword" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; transition: color 0.2s;"></i>
-                    </div>
-                </div>
-
-                <script>
-                    const togglePassword = document.querySelector('#togglePassword');
-                    const password = document.querySelector('#passwordInput');
-
-                    togglePassword.addEventListener('click', function (e) {
-                        // toggle the type attribute
-                        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                        password.setAttribute('type', type);
-                        // toggle the eye slash icon
-                        this.classList.toggle('fa-eye-slash');
-                        this.style.color = type === 'text' ? 'var(--primary-color)' : '#94a3b8';
-                    });
-                </script>
-
-                <div class="flex" style="justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #64748b; cursor: pointer;">
-                        <input type="checkbox" name="remember" style="width: 1rem; height: 1rem;"> Remember me
-                    </label>
-                    <a href="forgot_password" style="font-size: 0.875rem; color: var(--primary-color); font-weight: 600;">Forgot Password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; font-weight: 700; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);">
-                    Sign Into Portal <i class="fas fa-arrow-right ml-2"></i>
-                </button>
-            </form>
-
-            <div class="text-center mt-4">
-                <p style="color: #64748b;">New leadre? <a href="../register" style="color: var(--primary-color); font-weight: 800;">Create Administrator Account</a></p>
-            </div>
-        </div>
+    <div class="text-center mt-4">
+        <a href="login" class="btn btn-primary" style="padding: 1rem 3rem;">Sign In to Make a Pledge</a>
     </div>
 </div>
 

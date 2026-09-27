@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | St. Charles Lwanga Regiment Portal</title>
+    <title>Liturgy Singing Cycle | St. Charles Lwanga Regiment Portal</title>
     <link rel="icon" type="image/png" href="assets.html/images/other/main_logo.png">
     <link rel="shortcut icon" type="image/png" href="assets.html/images/other/main_logo.png">
     
@@ -66,7 +66,7 @@
             <div class="menu-group">
                 <p class="menu-label">Ministries &amp; More</p>
                 <div class="dropdown">
-                    <a href="#" id="ministries-trigger" class="nav-link ">
+                    <a href="#" id="ministries-trigger" class="nav-link active">
                         <i class="m-ico fas fa-users"></i>Ministries <i class="fas fa-chevron-down chev" style="font-size: 0.7rem;"></i>
                     </a>
                     <div class="dropdown-content">
@@ -95,7 +95,7 @@
             </div>
 
             <div class="menu-account">
-                                    <a href="login.html" class="nav-link active"><i class="m-ico fas fa-sign-in-alt"></i>Login</a>
+                                    <a href="login.html" class="nav-link "><i class="m-ico fas fa-sign-in-alt"></i>Login</a>
                     <a href="join.html" class="btn btn-primary">Join Us</a>
                             </div>
         </div>
@@ -167,74 +167,28 @@
                 </a>
             </div>
         
-<div class="auth-page">
-    <!-- Visual Half -->
-    <div class="auth-visual" style="background-image: url('assets.html/images/other/login.jpg');">
-        <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10; color: white;">
-            <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Faith & <br>Technology</h1>
-            <p style="font-size: 1.25rem; opacity: 0.9; max-width: 400px;">Managing our community with transparency, tradition, and digital innovation.</p>
-        </div>
+<section class="hero-premium" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/images/other/youths.jpg'); background-size: cover; background-position: center; color: white; padding: 6rem 0;">
+    <div class="container text-center">
+        <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem;">Liturgy Singing Cycle</h1>
+        <p style="opacity: 0.9; font-size: 1.25rem;">Weekly rotation for choirs and group-led singing schedules.</p>
+    </div>
+</section>
+
+<div class="container mt-4 mb-4">
+    <div class="page-header text-center">
+        <h2>Upcoming Choirs in Rotation</h2>
+        <p class="text-muted">Stay tuned with which group is leading the liturgy this week.</p>
     </div>
 
-    <!-- Form Half -->
-    <div class="auth-form-container">
-        <div class="auth-card">
-            <div class="mb-4">
-                <a href="../home" class="logo mb-4" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                    <img src="assets/images/other/main_logo.png" alt="Regiment Logo" style="height: 40px; width: auto;">
-                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Charles Lwanga Regiment</span>
-                </a>
-                <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-top: 2rem;">Welcome Back</h2>
-                <p style="color: #64748b; font-weight: 500;">Please enter your credentials to access the portal.</p>
+    <div class="grid grid-cols-3">
+        
+                    <div class="card text-center" style="grid-column: span 3; padding: 4rem;">
+                <p class="text-muted">The singing cycle for the next period is currently being finalized.</p>
+            </div>
             </div>
 
-            
-            <form action="#" data-demo-login method="POST">
-                <input type="hidden" name="action" value="login">
-                
-                <div class="mb-4">
-                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; color: #475569;">USERNAME OR EMAIL</label>
-                    <input type="text" name="login_id" placeholder="e.g. jdoe24" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
-                </div>
-
-                <div class="mb-4">
-                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; color: #475569;">PASSWORD</label>
-                    <div style="position: relative;">
-                        <input type="password" name="password" id="passwordInput" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
-                        <i class="fas fa-eye" id="togglePassword" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; transition: color 0.2s;"></i>
-                    </div>
-                </div>
-
-                <script>
-                    const togglePassword = document.querySelector('#togglePassword');
-                    const password = document.querySelector('#passwordInput');
-
-                    togglePassword.addEventListener('click', function (e) {
-                        // toggle the type attribute
-                        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                        password.setAttribute('type', type);
-                        // toggle the eye slash icon
-                        this.classList.toggle('fa-eye-slash');
-                        this.style.color = type === 'text' ? 'var(--primary-color)' : '#94a3b8';
-                    });
-                </script>
-
-                <div class="flex" style="justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #64748b; cursor: pointer;">
-                        <input type="checkbox" name="remember" style="width: 1rem; height: 1rem;"> Remember me
-                    </label>
-                    <a href="forgot_password" style="font-size: 0.875rem; color: var(--primary-color); font-weight: 600;">Forgot Password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; font-weight: 700; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);">
-                    Sign Into Portal <i class="fas fa-arrow-right ml-2"></i>
-                </button>
-            </form>
-
-            <div class="text-center mt-4">
-                <p style="color: #64748b;">New leadre? <a href="../register" style="color: var(--primary-color); font-weight: 800;">Create Administrator Account</a></p>
-            </div>
-        </div>
+    <div class="mt-4 p-4 text-center">
+        <p class="text-muted">Group leaders can update their rotation status and membership through the <a href="login" style="color: var(--primary-color); font-weight: 700;">Leader Dashboard</a>.</p>
     </div>
 </div>
 

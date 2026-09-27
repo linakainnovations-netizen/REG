@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | St. Charles Lwanga Regiment Portal</title>
+    <title>Online Giving | St. Charles Lwanga Regiment Portal</title>
     <link rel="icon" type="image/png" href="assets.html/images/other/main_logo.png">
     <link rel="shortcut icon" type="image/png" href="assets.html/images/other/main_logo.png">
     
@@ -60,7 +60,7 @@
                 <p class="menu-label">Worship &amp; Giving</p>
                 <a href="media.html" class="nav-link "><i class="m-ico fas fa-broadcast-tower"></i>Live Mass</a>
                 <a href="bulletins.html" class="nav-link "><i class="m-ico fas fa-newspaper"></i>Bulletins</a>
-                <a href="giving.html" class="nav-link "><i class="m-ico fas fa-hand-holding-heart"></i>Give</a>
+                <a href="giving.html" class="nav-link active"><i class="m-ico fas fa-hand-holding-heart"></i>Give</a>
             </div>
 
             <div class="menu-group">
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="dropdown">
-                    <a href="#" id="finance-trigger" class="nav-link ">
+                    <a href="#" id="finance-trigger" class="nav-link active">
                         <i class="m-ico fas fa-chart-pie"></i>Finance <i class="fas fa-chevron-down chev" style="font-size: 0.7rem;"></i>
                     </a>
                     <div class="dropdown-content">
@@ -95,7 +95,7 @@
             </div>
 
             <div class="menu-account">
-                                    <a href="login.html" class="nav-link active"><i class="m-ico fas fa-sign-in-alt"></i>Login</a>
+                                    <a href="login.html" class="nav-link "><i class="m-ico fas fa-sign-in-alt"></i>Login</a>
                     <a href="join.html" class="btn btn-primary">Join Us</a>
                             </div>
         </div>
@@ -166,78 +166,44 @@
                     <i class="fas fa-arrow-left"></i> Back
                 </a>
             </div>
-        
-<div class="auth-page">
-    <!-- Visual Half -->
-    <div class="auth-visual" style="background-image: url('assets.html/images/other/login.jpg');">
-        <div style="position: absolute; bottom: 4rem; left: 4rem; z-index: 10; color: white;">
-            <h1 style="font-size: 3.5rem; line-height: 1.1; margin-bottom: 1.5rem;">Faith & <br>Technology</h1>
-            <p style="font-size: 1.25rem; opacity: 0.9; max-width: 400px;">Managing our community with transparency, tradition, and digital innovation.</p>
-        </div>
+        <section class="hero-premium" style="background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; padding: 4rem 0;">
+    <div class="container text-center">
+        <h1><i class="fas fa-hand-holding-heart mr-2"></i> Give Online</h1>
+        <p style="opacity: 0.9; max-width: 620px; margin: 0 auto;">Manual MoMo works today (zero fees). Card checkout activates automatically once parish adds Flutterwave keys.</p>
     </div>
-
-    <!-- Form Half -->
-    <div class="auth-form-container">
-        <div class="auth-card">
-            <div class="mb-4">
-                <a href="../home" class="logo mb-4" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                    <img src="assets/images/other/main_logo.png" alt="Regiment Logo" style="height: 40px; width: auto;">
-                    <span style="font-size: 1.5rem; font-weight: 700; color: #1e293b;">St. Charles Lwanga Regiment</span>
-                </a>
-                <h2 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-top: 2rem;">Welcome Back</h2>
-                <p style="color: #64748b; font-weight: 500;">Please enter your credentials to access the portal.</p>
+</section>
+<div class="container mt-4 mb-4" style="max-width: 700px;">
+    <div class="card mb-4" style="padding: 1.5rem; background: #ecfdf5; border: 1px solid #a7f3d0;">
+        <h3 class="mb-4">Step 1 — Send MoMo (manual, always available)</h3>
+        <p><span class="badge" style="background: #FFCC00; color: #000; padding: 0.4rem 0.8rem;">MTN MoMo: 0975255734</span></p>
+        <p><span class="badge" style="background: #ED1C24; color: #fff; padding: 0.4rem 0.8rem;">Airtel Money: 0975255734</span></p>
+        <p class="text-muted" style="font-size: 0.875rem;">Dial *303# (MTN) or *778# (Airtel) → Send Money → copy the Transaction ID from the SMS.</p>
+    </div>
+    <div class="card" style="padding: 1.5rem;">
+        <h3 class="mb-4">Step 2 — Submit / Pay</h3>
+                        <form method="POST">
+            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <input type="text" name="giver_name" placeholder="Full name" required style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem;">
+                <input type="text" name="giver_phone" placeholder="Phone e.g. 0975..." required style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem;">
+                <input type="number" name="amount" placeholder="Amount (K)" min="1" step="0.01" required style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem;">
+                <input type="email" name="email" placeholder="Email (for card receipts, optional)" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem;">
+                <select name="type" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem;">
+                    <option value="offertory">Offertory</option><option value="tithe">Tithe</option><option value="donation">Donation</option><option value="thanksgiving">Thanksgiving</option><option value="pledge">Pledge payment</option>
+                </select>
+                <select name="network" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem;">
+                    <option>MTN</option><option>Airtel</option><option>Zamtel</option><option>other</option>
+                </select>
+                <select name="pay_method" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; grid-column: 1 / -1;">
+                    <option value="momo_manual">Manual MoMo — I already sent, verify my Txn ID (Recommended)</option>
+                    <option value="flutterwave" disabled>Pay now via Flutterwave (not enabled yet)</option>
+                </select>
+                <input type="text" name="txn_id" placeholder="MoMo Transaction ID (required for manual)" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; grid-column: 1 / -1;">
             </div>
-
-            
-            <form action="#" data-demo-login method="POST">
-                <input type="hidden" name="action" value="login">
-                
-                <div class="mb-4">
-                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; color: #475569;">USERNAME OR EMAIL</label>
-                    <input type="text" name="login_id" placeholder="e.g. jdoe24" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
-                </div>
-
-                <div class="mb-4">
-                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 0.875rem; color: #475569;">PASSWORD</label>
-                    <div style="position: relative;">
-                        <input type="password" name="password" id="passwordInput" style="width: 100%; padding: 0.85rem; border: 1px solid var(--border-color); border-radius: 0.5rem; font-size: 1rem;" required>
-                        <i class="fas fa-eye" id="togglePassword" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); cursor: pointer; color: #94a3b8; transition: color 0.2s;"></i>
-                    </div>
-                </div>
-
-                <script>
-                    const togglePassword = document.querySelector('#togglePassword');
-                    const password = document.querySelector('#passwordInput');
-
-                    togglePassword.addEventListener('click', function (e) {
-                        // toggle the type attribute
-                        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                        password.setAttribute('type', type);
-                        // toggle the eye slash icon
-                        this.classList.toggle('fa-eye-slash');
-                        this.style.color = type === 'text' ? 'var(--primary-color)' : '#94a3b8';
-                    });
-                </script>
-
-                <div class="flex" style="justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: #64748b; cursor: pointer;">
-                        <input type="checkbox" name="remember" style="width: 1rem; height: 1rem;"> Remember me
-                    </label>
-                    <a href="forgot_password" style="font-size: 0.875rem; color: var(--primary-color); font-weight: 600;">Forgot Password?</a>
-                </div>
-
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; font-weight: 700; border-radius: 0.5rem; box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);">
-                    Sign Into Portal <i class="fas fa-arrow-right ml-2"></i>
-                </button>
-            </form>
-
-            <div class="text-center mt-4">
-                <p style="color: #64748b;">New leadre? <a href="../register" style="color: var(--primary-color); font-weight: 800;">Create Administrator Account</a></p>
-            </div>
-        </div>
+            <button type="submit" class="btn btn-primary mt-4" style="width: 100%; padding: 1rem;">Submit Giving</button>
+        </form>
+        <p class="text-muted mt-4" style="font-size: 0.8rem;">Manual verify = treasurer confirms Txn ID then it posts to Finance. Flutterwave = auto-verify on callback. DPO wiring uses the same intent table — add token in Dashboard → Settings.</p>
     </div>
 </div>
-
     </main>
 
     <footer style="background: linear-gradient(rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.92)), url('assets.html/images/other/footer.jpg'); background-size: cover; background-position: center; color: white; padding: 4rem 0 2rem 0; margin-top: 4rem; position: relative; overflow: hidden;">
@@ -384,3 +350,4 @@
 <script src="js/demo-data.js"></script>
 <script src="js/snapshot-demo.js"></script></body>
 </html>
+<style>@media (max-width: 768px) { .grid { grid-template-columns: 1fr !important; } }</style>
