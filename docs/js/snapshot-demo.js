@@ -5,6 +5,37 @@
  */
 (function () {
   "use strict";
+  /* Loader (provided): fullscreen overlay shown on login + heavy actions */
+  var loaderCSS = ".loader{--b:5px;width:calc(12*var(--b));aspect-ratio:1;border-radius:50%;"
+    + "background:repeating-radial-gradient(calc(2*var(--b)) at top,#0000 -1px,#000 0 calc(50% - 1px),#0000 50% calc(100% - 1px)) calc(50% + var(--b)) 100%,"
+    + "repeating-radial-gradient(calc(2*var(--b)) at bottom,#000 -1px,#0000 0 calc(50% - 1px),#000 50% calc(100% - 1px)) 50% 0;"
+    + "background-size:150% 50%;background-repeat:no-repeat;"
+    + "mask:radial-gradient(calc(1.5*var(--b)) at calc(100% - var(--b)/2) 0,#0000 calc(100%/3),#000 calc(100%/3 + 1px) 110%,#0000 0) calc(50% + var(--b)/2) 100%/calc(3*var(--b)) 50% exclude no-repeat,conic-gradient(#000 0 0);"
+    + "animation:l20 1s infinite linear;}"
+    + "@keyframes l20{100%{transform:rotate(1turn)}}"
+    + "#demo-loader{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:10003;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem;}"
+    + "#demo-loader .loader{--b:6px;filter:invert(1);}"
+    + "#demo-loader p{color:#fff;font-weight:700;}";
+  function ensureLoader() {
+    if (document.getElementById("demo-loader")) return;
+    var st = document.createElement("style");
+    st.textContent = loaderCSS;
+    document.head.appendChild(st);
+    var ov = document.createElement("div");
+    ov.id = "demo-loader";
+    ov.innerHTML = '<div class="loader"></div><p>Loading…</p>';
+    document.body.appendChild(ov);
+  }
+  function showLoader(msg) {
+    ensureLoader();
+    var ov = document.getElementById("demo-loader");
+    if (msg) ov.querySelector("p").textContent = msg;
+    ov.style.display = "flex";
+  }
+  function hideLoader() {
+    var ov = document.getElementById("demo-loader");
+    if (ov) ov.style.display = "none";
+  }
   function toast(msg) {
     var t = document.getElementById("demo-toast");
     if (!t) { alert(msg); return; }
@@ -53,8 +84,11 @@
       var u = users.find(function (x) { return x.username.toLowerCase() === id; });
       if (!u) { toast("Invalid username — click 'demo accounts' above and use one of those."); return; }
       if (pw !== "REGIMENT") { toast("Wrong password — demo password is REGIMENT for all users."); return; }
-      try { localStorage.setItem("demo_session", JSON.stringify({ username: u.username, at: Date.now() })); } catch (e) {}
-      location.href = "dashboard.html";
+      showLoader("Signing you in…");
+      setTimeout(function () {
+        try { localStorage.setItem("demo_session", JSON.stringify({ username: u.username, at: Date.now() })); } catch (e) {}
+        location.href = "dashboard.html";
+      }, 700);
     });
   });
 
@@ -63,7 +97,11 @@
     if (f._demoIsLogin) return;
     f.addEventListener("submit", function (e) {
       e.preventDefault();
-      toast("Static preview: this action needs the PHP + MySQL backend. Login pages fully work with REGIMENT.");
+      showLoader("Working…");
+      setTimeout(function () {
+        hideLoader();
+        toast("Static preview: this action needs the PHP + MySQL backend. Login pages fully work with REGIMENT.");
+      }, 700);
     });
   });
 })();

@@ -4,6 +4,25 @@
  */
 (function(){
 "use strict";
+/* Loader (provided): shown while heavy dashboard pages render */
+(function ensureLoader(){
+  if (document.getElementById("demo-loader")) return;
+  var css = ".loader{--b:5px;width:calc(12*var(--b));aspect-ratio:1;border-radius:50%;"
+    + "background:repeating-radial-gradient(calc(2*var(--b)) at top,#0000 -1px,#000 0 calc(50% - 1px),#0000 50% calc(100% - 1px)) calc(50% + var(--b)) 100%,"
+    + "repeating-radial-gradient(calc(2*var(--b)) at bottom,#000 -1px,#0000 0 calc(50% - 1px),#000 50% calc(100% - 1px)) 50% 0;"
+    + "background-size:150% 50%;background-repeat:no-repeat;"
+    + "mask:radial-gradient(calc(1.5*var(--b)) at calc(100% - var(--b)/2) 0,#0000 calc(100%/3),#000 calc(100%/3 + 1px) 110%,#0000 0) calc(50% + var(--b)/2) 100%/calc(3*var(--b)) 50% exclude no-repeat,conic-gradient(#000 0 0);"
+    + "animation:l20 1s infinite linear;}"
+    + "@keyframes l20{100%{transform:rotate(1turn)}}"
+    + "#demo-loader{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:10003;display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem;}"
+    + "#demo-loader .loader{--b:6px;filter:invert(1);}"
+    + "#demo-loader p{color:#fff;font-weight:700;}";
+  var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+  var ov = document.createElement("div"); ov.id = "demo-loader";
+  ov.innerHTML = '<div class="loader"></div><p>Loading…</p>'; document.body.appendChild(ov);
+})();
+function showLoader(msg){ var ov=document.getElementById("demo-loader"); if(ov){ if(msg) ov.querySelector("p").textContent=msg; ov.style.display="flex"; } }
+function hideLoader(){ var ov=document.getElementById("demo-loader"); if(ov) ov.style.display="none"; }
 const $ = s => document.querySelector(s);
 const esc = s => String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const store = {
@@ -92,6 +111,11 @@ function renderSidebar(){
   $("#sidebar").innerHTML = html;
   $("#logoutLink").onclick = e=>{e.preventDefault(); localStorage.removeItem("demo_session"); location.href="login.html";};
   $("#switchRole").onchange = e=>{ store.set("session",{username:e.target.value,at:Date.now()}); location.reload(); };
+  // Phone: tap a link closes the slide-in panel; backdrop tap closes too
+  const closeSB = ()=>{ const sb=$("#sidebar"); sb.classList.remove("open","active"); const bd=$("#sbBackdrop"); if(bd) bd.style.display="none"; };
+  $("#sidebar").querySelectorAll(".sidebar-nav a").forEach(a=>a.addEventListener("click", closeSB));
+  const bd=$("#sbBackdrop"); if(bd) bd.onclick = closeSB;
+  $("#sidebar")._closeSB = closeSB;
 }
 
 // ---- header (mirrors siders_pages/header.php) ----
@@ -101,7 +125,7 @@ function renderHeader(page){
   <div class="breadcrumb"><span class="text-muted">Dashboard</span><i class="fas fa-chevron-right mx-2" style="font-size:.7rem"></i><span class="breadcrumb-active">${esc(title)}</span></div></div>
   <div class="header-right"><div class="header-search"><i class="fas fa-search"></i><input id="globalSearch" placeholder="Search records... (filters tables)"></div>
   <a href="#/profile" style="text-decoration:none;color:inherit"><div class="user-profile-widget"><div class="user-info text-right"><p class="name">${esc(me.full_name)}</p><p class="role">${esc(me.role_name)}</p></div><div class="user-avatar-premium">${esc(me.full_name[0])}</div></div></a></div>`;
-  $("#menuBtn").onclick=()=>{const sb=$("#sidebar"); sb.classList.toggle("open"); sb.classList.toggle("active");};
+  $("#menuBtn").onclick=()=>{const sb=$("#sidebar"); const opening=!sb.classList.contains("open"); sb.classList.toggle("open",opening); sb.classList.toggle("active",opening); const bd=$("#sbBackdrop"); if(bd) bd.style.display=opening?"block":"none";};
   const gs=$("#globalSearch"); if(gs) gs.oninput=e=>{ const q=e.target.value.toLowerCase(); document.querySelectorAll("#pageRoot table tbody tr").forEach(tr=>{ tr.style.display = tr.textContent.toLowerCase().includes(q)?"":"none"; }); };
 }
 
@@ -221,7 +245,9 @@ R.invite_leader = function(){ return `<h1>Invite New Leader</h1><p class="text-m
 // ---- router ----
 function render(){
   const page = curPage();
+  showLoader("Loading " + page.replace(/_/g," ") + "…");
   renderSidebar(); renderHeader(page);
+  const bd=$("#sbBackdrop"); if(bd) bd.style.display="none";
   const fn = R[page] || R.overview;
   const root = $("#pageRoot");
   root.innerHTML = fn();
@@ -230,6 +256,8 @@ function render(){
   bindActions();
   $("#logoutTop").onclick=e=>{e.preventDefault();localStorage.removeItem("demo_session");location.href="login.html";};
   window.scrollTo(0,0);
+  // let charts/tables paint first, then lift the loader
+  requestAnimationFrame(()=>setTimeout(hideLoader, 450));
 }
 
 function bindActions(){

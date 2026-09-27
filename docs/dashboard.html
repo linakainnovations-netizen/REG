@@ -27,7 +27,9 @@
 @media(max-width:900px){.dashboard-sidebar-premium{display:none}.dashboard-sidebar-premium.open{display:flex;position:fixed;z-index:99;height:100vh}}
 /* ---- Mobile patch: all roles, all phones (complements real head-side.css/main.css) ---- */
 @media(max-width:1024px){
-.dashboard-sidebar-premium.open{transform:translateX(0)!important;z-index:10002;box-shadow:20px 0 60px rgba(0,0,0,.35)}
+.dashboard-sidebar-premium.open{transform:translateX(0)!important;z-index:10002;box-shadow:20px 0 60px rgba(0,0,0,.35);width:280px;max-width:85vw;height:100dvh;overflow-y:auto;display:flex!important;flex-direction:column!important}
+.dashboard-sidebar-premium.open .sidebar-nav{display:block!important}
+.dashboard-sidebar-premium.open .nav-item{display:flex!important;width:100%}
 .dashboard-main{width:100%}
 }
 @media(max-width:768px){
@@ -45,6 +47,7 @@ h1{font-size:1.4rem!important}
 </head>
 <body class="dashboard-body">
 <div class="demo-strip">STATIC DEMO — same pages as PHP build · password REGIMENT · data saves in this browser only · <a href="index.html" style="text-decoration:underline">all accounts</a> · <a href="#" id="logoutTop" style="text-decoration:underline">log out</a></div>
+<div id="sbBackdrop" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:10001;"></div>
 <div class="dashboard-wrapper">
 <aside class="dashboard-sidebar-premium" id="sidebar"></aside>
 <main class="dashboard-main">
