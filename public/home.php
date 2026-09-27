@@ -151,7 +151,8 @@ try {
                     </div>
                 </div>
                 <div class="card" style="padding: 0; overflow: hidden; border: none; box-shadow: var(--shadow-md);">
-                    <img src="assets/images/other/youths.jpg" style="width: 100%; height: 250px; object-fit: cover; object-position: top;">
+                    <img src="assets/images/other/youths.jpg" 
+                    style="width: 100%; height: 250px; object-fit: cover; object-position: top;">
                     <div class="p-4 text-left">
                         <h4 style="margin-bottom: 0.5rem; color: var(--accent-color);">Liturgy & Prayer</h4>
                         <p class="text-muted" style="font-size: 0.9rem;">Dedication to spiritual growth through daily mass and weekly liturgical devotion.</p>
@@ -166,7 +167,9 @@ try {
         <div class="card" style="padding: 0; overflow: hidden; border: none; box-shadow: var(--shadow-lg);">
             <div class="grid grid-cols-2" style="gap: 0; align-items: stretch;">
                 <div>
-                    <img src="assets\images\other\LwangaNcompanionMartyrs.jpg" alt="The 20 future martyrs at Bukumbi Mission, 1885" style="width: 100%; height: 100%; min-height: 320px; object-fit: cover;">
+                    <img src="assets/images/other/LwangaNcompanionMartyrs.jpg" 
+                    alt="The 20 future martyrs at Bukumbi Mission, 1885" 
+                    style="width: 100%; height: 100%; min-height: 320px; object-fit: cover;">
                 </div>
                 <div class="p-4" style="padding: 2.5rem; background: white;">
                     <span class="badge" style="background: #fef3c7; color: #92400e; padding: 0.3rem 0.8rem; font-size: 0.75rem; font-weight: 700;">OUR HERITAGE</span>
